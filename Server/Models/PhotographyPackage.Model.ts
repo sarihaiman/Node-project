@@ -5,7 +5,7 @@ enum PhotographyPackage {'Chalake','NewBorn','SmathCake','Family','Children'}
 
 const PhotographyPackage_schema = new Schema({
     Id: { type: Number },
-    Type: { type: String ,enum: PhotographyPackage},
+    Type: { type: Number ,enum: PhotographyPackage},
     MoneyToHour: { type: Number }
 });
 
