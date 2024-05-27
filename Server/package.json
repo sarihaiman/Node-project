@@ -18,6 +18,7 @@
   },
   "homepage": "https://github.com/sarihaiman/Pastry-Chef#readme",
   "dependencies": {
+    "date-and-time": "^3.3.0",
     "dotenv": "^16.4.5",
     "enum": "^3.0.4",
     "express": "^4.19.2",

@@ -1,12 +1,12 @@
 import { Response, Request } from 'express';
 import PhotographyPackage_Model from '../Models/PhotographyPackage.Model';
 
-export const getallPhotographyPackage = async function (req: Request, res: Response) {
+export const getallPhotographyPackage = async (req: Request, res: Response) =>{
     const PhotographyPackage = await PhotographyPackage_Model.find();
     res.send(PhotographyPackage)
 }
 
-export const addPhotographyPackage = async function (req: Request, res: Response) {
+export const addPhotographyPackage = async (req: Request, res: Response) =>{
     try {
         const PhotographyPackage = JSON.parse(JSON.stringify(req.body));
         const countPhotographyPackage = await PhotographyPackage_Model.find();
@@ -29,9 +29,9 @@ export const addPhotographyPackage = async function (req: Request, res: Response
     }
 }
 
-export const updatePhotographyPackage = async function (req: Request, res: Response) {
+export const updatePhotographyPackage = async (req: Request, res: Response) =>{
     try {
-        const id = Number(req.body.Id);
+        const id = req.params.Id;
         const data = req.body;
         if (await PhotographyPackage_Model.findOne({ "Id": id }) === null) {
             res.status(404).send('PhotographyPackage not found');
