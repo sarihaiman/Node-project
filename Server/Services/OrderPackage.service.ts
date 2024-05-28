@@ -22,24 +22,62 @@ export const addOrderPackage = async function (req: Request, res: Response) {
             "EndHour": Array(OrderPackage.EndHour),
             "PackageId": Number(OrderPackage.PackageId),
         }
-        try {
-            await isCorrect(newOrderPackage)
-            const length = countOrderPackage.length
-            if (length === 0)
-                newOrderPackage.Id = 0;
-            else {
-                const lengthNow = Number(countOrderPackage[length - 1].Id) + 1
-                newOrderPackage.Id = lengthNow
-            }
-            await OrderPackage_Model.insertMany(newOrderPackage);
-            res.send("Post " + OrderPackage.Id + " secceeded")
+        await isCorrect(newOrderPackage)
+        const length = countOrderPackage.length
+        if (length === 0)
+            newOrderPackage.Id = 0;
+        else {
+            const lengthNow = Number(countOrderPackage[length - 1].Id) + 1
+            newOrderPackage.Id = lengthNow
         }
-        catch (err) {
-            res.status(409).send("" + err)
-        }
+        await OrderPackage_Model.insertMany(newOrderPackage);
+        res.send("Post " + OrderPackage.Id + " secceeded")
     } catch (err) {
         res.status(409).send("" + err);
     }
+}
+
+export const updateOrderPackage = async function (req: Request, res: Response) {
+    try {
+        const id = Number(req.params.Id);
+        const data = req.body;
+        const newOrderPackage = {
+            "Id": Number(id),
+            "Date": Array(data.Date),
+            "BeginingHour": Array(data.BeginingHour),
+            "EndHour": Array(data.EndHour),
+            "PackageId": Number(data.PackageId)
+        }
+        await isCorrect(newOrderPackage)
+        await OrderPackage_Model.updateOne({
+            Id: id
+        }, {
+            $set: {
+                Date: Number(data.Date),
+                BeginingHour: Number(data.BeginingHour),
+                EndHour: Number(data.EndHour),
+                PackageId: Number(data.PackageId)
+            }
+        })
+        res.send("Update " + id + " secceeded")
+    }
+    catch (err) {
+        res.status(409).send('' + err);
+    }
+}
+
+export const deleteOrderPackage = async (req: Request, res: Response) => {
+    try {
+        const id = req.params.Id;
+        if (await OrderPackage_Model.findOne({ "Id": id }) === null) {
+            res.status(404).send('OrderPackage not found');
+            return
+        }
+        await OrderPackage_Model.deleteOne({ Id: id })
+    } catch (err) {
+        res.status(409).send('error!!!');
+    }
+    res.send("Delete: " + req.params.Id + " secceeded");
 }
 
 const isCorrect = async (newOrderPackage: any) => {
