@@ -9,10 +9,10 @@ app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: false }))
 
 import PhotographyPackage_Router from './Routers/PhotographyPackage.Router'
-import OrderPackage_Controller from './Controllers/OrderPackage.Controller'
+import OrderPackage_Router from './Routers/OrderPackage.Router'
 
 app.use(PhotographyPackage_Router)
-app.use(OrderPackage_Controller)
+app.use(OrderPackage_Router)
 
 app.listen(PORT, () =>{
   console.log(`http://localhost:${PORT}`)

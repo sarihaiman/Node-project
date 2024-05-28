@@ -1,10 +1,15 @@
 import { Response, Request } from 'express';
-const OrderPackage_Model=require('../Models/OrderPackage.Model')
+import PhotographyPackage_Model from '../Models/PhotographyPackage.Model';
+import OrderPackage_Model from '../Models/OrderPackage.Model';
+import date from 'date-and-time';
 
-// export const getallPhotographyPackage = async function (req: Request, res: Response) {
-//     const PhotographyPackage = await PhotographyPackage_Model.find();
-//     res.send(PhotographyPackage)
-// }
+const datePattern = date.compile('YYYY/MM/DD')
+const hourPattern = date.compile('hh:mm')
+
+export const getallOrderPackage = async function (req: Request, res: Response) {
+    const PhotographyPackage = await OrderPackage_Model.find();
+    res.send(PhotographyPackage)
+}
 
 export const addOrderPackage = async function (req: Request, res: Response) {
     try {
@@ -17,52 +22,52 @@ export const addOrderPackage = async function (req: Request, res: Response) {
             "EndHour": Array(OrderPackage.EndHour),
             "PackageId": Number(OrderPackage.PackageId),
         }
-        const length = countOrderPackage.length
-        if (length === 0)
-            newOrderPackage.Id = 0;
-        else {
-            const lengthNow = Number(countOrderPackage[length - 1].Id) + 1
-            newOrderPackage.Id = lengthNow
+        try {
+            await isCorrect(newOrderPackage)
+            const length = countOrderPackage.length
+            if (length === 0)
+                newOrderPackage.Id = 0;
+            else {
+                const lengthNow = Number(countOrderPackage[length - 1].Id) + 1
+                newOrderPackage.Id = lengthNow
+            }
+            await OrderPackage_Model.insertMany(newOrderPackage);
+            res.send("Post " + OrderPackage.Id + " secceeded")
         }
-        await OrderPackage_Model.insertMany(newOrderPackage);
-        res.send("Post " + OrderPackage.Id + " secceeded")
+        catch (err) {
+            res.status(409).send("" + err)
+        }
     } catch (err) {
-        res.status(409).send(err);
+        res.status(409).send("" + err);
     }
 }
 
-// export const updatePhotographyPackage = async function (req: Request, res: Response) {
-//     try {
-//         const id = Number(req.body.Id);
-//         const data = req.body;
-//         if (await PhotographyPackage_Model.findOne({ "Id": id }) === null) {
-//             res.status(404).send('PhotographyPackage not found');
-//             return
-//         }
-//         await PhotographyPackage_Model.updateOne({
-//             Id: id
-//         }, {
-//             $set: {
-//                 Type: Number(data.Type),
-//                 MoneyToHour: Number(data.MoneyToHour)
-//             }
-//         })
-//         res.send("Update " + id + " secceeded")
-//     } catch (err) {
-//         res.status(409).send('error!!!');
-//     }
-// }
-
-// export const deletePhotographyPackage = async (req: Request, res: Response) => {
-//     try {
-//         const id = req.params.Id;
-//         if (await PhotographyPackage_Model.findOne({ "Id": id }) === null) {
-//             res.status(404).send('PhotographyPackage not found');
-//             return
-//         }
-//         await PhotographyPackage_Model.deleteOne({ Id: id })
-//     } catch (err) {
-//         res.status(409).send('error!!!');
-//     }
-//     res.send("Delete: " + req.params.Id + " secceeded");
-// }
+const isCorrect = async (newOrderPackage: any) => {
+    if (await PhotographyPackage_Model.findOne({ "Id": newOrderPackage.PackageId }) === null) {
+        throw new Error("error PackageId")
+    }
+    if (!(date.isValid(newOrderPackage.BeginingHour, hourPattern))) {
+        throw new Error("error BeginingHour")
+    }
+    if (!date.isValid(newOrderPackage.EndHour, hourPattern)) {
+        throw new Error("error EndHour")
+    }
+    if (!date.isValid(newOrderPackage.Date, datePattern)) {
+        throw new Error("error Date")
+    }
+    if (!(newOrderPackage.EndHour > newOrderPackage.BeginingHour)) {
+        throw new Error("error Hours")
+    }
+    if (newOrderPackage.Date < date.format(new Date(), datePattern)) {
+        throw new Error("error - Date pass")
+    }
+    const equalsDate = await OrderPackage_Model.find({ "Date": newOrderPackage.Date })
+    equalsDate.sort(function (a: any, b: any) { return a.BeginingHour < b.BeginingHour ? -1 : 1 });
+    equalsDate.forEach((e: any) => {
+        if (e['EndHour'] > newOrderPackage.BeginingHour) {
+            if (!(e['BeginingHour'] > newOrderPackage.EndHour)) {
+                throw new Error("the hours is not available")
+            }
+        }
+    });
+}

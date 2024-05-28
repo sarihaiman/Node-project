@@ -1,4 +1,5 @@
-import mongoose, { Schema } from 'mongoose';
+import mongoose from '../Services/db.services';
+import { Schema } from "mongoose";
 import date from 'date-and-time';
 
 const datePattern=date.compile('YYYY/MM/DD')
@@ -13,4 +14,4 @@ const OrderPackageModel_schema = new Schema({
     PackageId: { type: Number },
 });
 
-module.exports = mongoose.model("OrderPackage_Model", OrderPackageModel_schema);
+export default mongoose.model("OrderPackage_Model", OrderPackageModel_schema);
