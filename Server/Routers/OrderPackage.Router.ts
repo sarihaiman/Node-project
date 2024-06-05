@@ -1,10 +1,10 @@
 import express from 'express';
-const OrderPackageController = require('../Controllers/OrderPackage.Controller');
+import {get,post,put,deleteOne}  from '../Controllers/OrderPackage.Controller';
 const router = express.Router();
 
-router.get('/OrderPackage', OrderPackageController.get)
-router.post('/OrderPackage', OrderPackageController.post)
-router.put('/OrderPackage/:Id', OrderPackageController.put)
-router.delete('/OrderPackage/:Id', OrderPackageController.deleteOne)
+router.get('/OrderPackage', get)
+router.post('/OrderPackage', post)
+router.put('/OrderPackage/:id', put)
+router.delete('/OrderPackage/:id', deleteOne)
 
 export default router

@@ -11,19 +11,19 @@ export const addPhotographyPackage = async (req: Request, res: Response) =>{
         const PhotographyPackage = JSON.parse(JSON.stringify(req.body));
         const countPhotographyPackage = await PhotographyPackage_Model.find();
         const newPhotographyPackage = {
-            "Id": Number(PhotographyPackage.Id),
+            "id": Number(PhotographyPackage.id),
             "Type": Number(PhotographyPackage.Type),
             "MoneyToHour": Number(PhotographyPackage.MoneyToHour),
         }
         const length = countPhotographyPackage.length
         if (length === 0)
-            newPhotographyPackage.Id = 0;
+            newPhotographyPackage.id = 0;
         else {
-            const lengthNow = Number(countPhotographyPackage[length - 1].Id) + 1
-            newPhotographyPackage.Id = lengthNow
+            const lengthNow = Number(countPhotographyPackage[length - 1].id) + 1
+            newPhotographyPackage.id = lengthNow
         }
         await PhotographyPackage_Model.insertMany(newPhotographyPackage);
-        res.send("Post " + PhotographyPackage.Id + " secceeded")
+        res.send("Post " + PhotographyPackage.id + " secceeded")
     } catch (err) {
         res.status(409).send(err);
     }
@@ -31,14 +31,14 @@ export const addPhotographyPackage = async (req: Request, res: Response) =>{
 
 export const updatePhotographyPackage = async (req: Request, res: Response) =>{
     try {
-        const id = req.params.Id;
+        const id = req.params.id;
         const data = req.body;
-        if (await PhotographyPackage_Model.findOne({ "Id": id }) === null) {
+        if (await PhotographyPackage_Model.findOne({ "id": id }) === null) {
             res.status(404).send('PhotographyPackage not found');
             return
         }
         await PhotographyPackage_Model.updateOne({
-            Id: id
+            id: id
         }, {
             $set: {
                 Type: Number(data.Type),
@@ -53,14 +53,14 @@ export const updatePhotographyPackage = async (req: Request, res: Response) =>{
 
 export const deletePhotographyPackage = async (req: Request, res: Response) => {
     try {
-        const id = req.params.Id;
-        if (await PhotographyPackage_Model.findOne({ "Id": id }) === null) {
+        const id = req.params.id;
+        if (await PhotographyPackage_Model.findOne({ "id": id }) === null) {
             res.status(404).send('PhotographyPackage not found');
             return
         }
-        await PhotographyPackage_Model.deleteOne({ Id: id })
+        await PhotographyPackage_Model.deleteOne({ id: id })
     } catch (err) {
         res.status(409).send('error!!!');
     }
-    res.send("Delete: " + req.params.Id + " secceeded");
+    res.send("Delete: " + req.params.id + " secceeded");
 }

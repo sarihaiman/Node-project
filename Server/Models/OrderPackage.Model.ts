@@ -5,13 +5,13 @@ import date from 'date-and-time';
 const datePattern=date.compile('YYYY/MM/DD')
 const hourPattern=date.compile('hh:mm')
 
-
 const OrderPackageModel_schema = new Schema({
-    Id: { type: Number },
-    Date: { type: datePattern },
-    BeginingHour: { type: hourPattern },
-    EndHour: { type: hourPattern },
-    PackageId: { type: Number },
+    id: { type: Number },
+    userid: { type: Number },
+    packageId: { type: Number },
+    date: { type: datePattern },
+    beginingHour: { type: hourPattern },
+    endHour: { type: hourPattern },
 });
 
 export default mongoose.model("OrderPackage_Model", OrderPackageModel_schema);

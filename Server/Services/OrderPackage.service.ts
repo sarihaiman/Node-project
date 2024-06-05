@@ -16,22 +16,23 @@ export const addOrderPackage = async function (req: Request, res: Response) {
         const OrderPackage = JSON.parse(JSON.stringify(req.body));
         const countOrderPackage = await OrderPackage_Model.find();
         const newOrderPackage = {
-            "Id": Number(OrderPackage.Id),
-            "Date": Array(OrderPackage.Date),
-            "BeginingHour": Array(OrderPackage.BeginingHour),
-            "EndHour": Array(OrderPackage.EndHour),
-            "PackageId": Number(OrderPackage.PackageId),
+            "id": Number(OrderPackage.id),
+            "userid": Number(OrderPackage.userid),
+            "date": Array(OrderPackage.date),
+            "beginingHour": Array(OrderPackage.beginingHour),
+            "endHour": Array(OrderPackage.endHour),
+            "packageId": Number(OrderPackage.packageId),
         }
         await isCorrect(newOrderPackage)
         const length = countOrderPackage.length
         if (length === 0)
-            newOrderPackage.Id = 0;
+            newOrderPackage.id = 0;
         else {
-            const lengthNow = Number(countOrderPackage[length - 1].Id) + 1
-            newOrderPackage.Id = lengthNow
+            const lengthNow = Number(countOrderPackage[length - 1].id) + 1
+            newOrderPackage.id = lengthNow
         }
         await OrderPackage_Model.insertMany(newOrderPackage);
-        res.send("Post " + OrderPackage.Id + " secceeded")
+        res.send("Post " + OrderPackage.id + " secceeded")
     } catch (err) {
         res.status(409).send("" + err);
     }
@@ -39,24 +40,25 @@ export const addOrderPackage = async function (req: Request, res: Response) {
 
 export const updateOrderPackage = async function (req: Request, res: Response) {
     try {
-        const id = Number(req.params.Id);
+        const id = Number(req.params.id);
         const data = req.body;
         const newOrderPackage = {
-            "Id": Number(id),
-            "Date": Array(data.Date),
-            "BeginingHour": Array(data.BeginingHour),
-            "EndHour": Array(data.EndHour),
-            "PackageId": Number(data.PackageId)
+            "id": Number(id),
+            "date": Array(data.date),
+            "beginingHour": Array(data.beginingHour),
+            "endHour": Array(data.endHour),
+            "packageId": Number(data.packageId)
         }
         await isCorrect(newOrderPackage)
         await OrderPackage_Model.updateOne({
-            Id: id
+            id: id
         }, {
             $set: {
-                Date: Number(data.Date),
-                BeginingHour: Number(data.BeginingHour),
-                EndHour: Number(data.EndHour),
-                PackageId: Number(data.PackageId)
+                userid: Number(data.id),
+                date: Number(data.date),
+                beginingHour: Number(data.beginingHour),
+                endHour: Number(data.endHour),
+                packageId: Number(data.packageId)
             }
         })
         res.send("Update " + id + " secceeded")
@@ -68,42 +70,42 @@ export const updateOrderPackage = async function (req: Request, res: Response) {
 
 export const deleteOrderPackage = async (req: Request, res: Response) => {
     try {
-        const id = req.params.Id;
-        if (await OrderPackage_Model.findOne({ "Id": id }) === null) {
+        const id = req.params.id;
+        if (await OrderPackage_Model.findOne({ "id": id }) === null) {
             res.status(404).send('OrderPackage not found');
             return
         }
-        await OrderPackage_Model.deleteOne({ Id: id })
+        await OrderPackage_Model.deleteOne({ id: id })
     } catch (err) {
         res.status(409).send('error!!!');
     }
-    res.send("Delete: " + req.params.Id + " secceeded");
+    res.send("Delete: " + req.params.id + " secceeded");
 }
 
 const isCorrect = async (newOrderPackage: any) => {
-    if (await PhotographyPackage_Model.findOne({ "Id": newOrderPackage.PackageId }) === null) {
-        throw new Error("error PackageId")
+    if (await PhotographyPackage_Model.findOne({ "id": newOrderPackage.packageId }) === null) {
+        throw new Error("error packageId")
     }
-    if (!(date.isValid(newOrderPackage.BeginingHour, hourPattern))) {
-        throw new Error("error BeginingHour")
+    if (!(date.isValid(newOrderPackage.beginingHour, hourPattern))) {
+        throw new Error("error beginingHour")
     }
-    if (!date.isValid(newOrderPackage.EndHour, hourPattern)) {
-        throw new Error("error EndHour")
+    if (!date.isValid(newOrderPackage.endHour, hourPattern)) {
+        throw new Error("error endHour")
     }
-    if (!date.isValid(newOrderPackage.Date, datePattern)) {
-        throw new Error("error Date")
+    if (!date.isValid(newOrderPackage.date, datePattern)) {
+        throw new Error("error date")
     }
-    if (!(newOrderPackage.EndHour > newOrderPackage.BeginingHour)) {
+    if (!(newOrderPackage.endHour > newOrderPackage.beginingHour)) {
         throw new Error("error Hours")
     }
-    if (newOrderPackage.Date < date.format(new Date(), datePattern)) {
-        throw new Error("error - Date pass")
+    if (newOrderPackage.date < date.format(new Date(), datePattern)) {
+        throw new Error("error - date pass")
     }
-    const equalsDate = await OrderPackage_Model.find({ "Date": newOrderPackage.Date })
-    equalsDate.sort(function (a: any, b: any) { return a.BeginingHour < b.BeginingHour ? -1 : 1 });
-    equalsDate.forEach((e: any) => {
-        if (e['EndHour'] > newOrderPackage.BeginingHour) {
-            if (!(e['BeginingHour'] > newOrderPackage.EndHour)) {
+    const equalsdate = await OrderPackage_Model.find({ "date": newOrderPackage.date })
+    equalsdate.sort(function (a: any, b: any) { return a.beginingHour < b.beginingHour ? -1 : 1 });
+    equalsdate.forEach((e: any) => {
+        if (e['endHour'] > newOrderPackage.beginingHour) {
+            if (!(e['beginingHour'] > newOrderPackage.endHour)) {
                 throw new Error("the hours is not available")
             }
         }

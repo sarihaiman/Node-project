@@ -4,7 +4,7 @@ import mongoose from '../Services/db.services';
 enum PhotographyPackage { 'Chalake', 'NewBorn', 'SmathCake', 'Family', 'Children' }
 
 const PhotographyPackage_schema = new Schema({
-    Id: { type: Number },
+    id: { type: Number },
     Type: { type: Number, enum: PhotographyPackage },
     MoneyToHour: { type: Number }
 });
