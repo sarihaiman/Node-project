@@ -5,4 +5,4 @@ const router = express.Router();
 router.get('/business', get)
 router.put('/business', put)
 
-export default router
+export default router;

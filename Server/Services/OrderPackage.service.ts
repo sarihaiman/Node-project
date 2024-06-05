@@ -92,7 +92,7 @@ const isCorrect = async (newOrderPackage: any) => {
     if (!date.isValid(newOrderPackage.endHour, hourPattern)) {
         throw new Error("error endHour")
     }
-    if (!date.isValid(newOrderPackage.date, datePattern)) {
+    if (!(date.isValid(newOrderPackage.date, datePattern))) {
         throw new Error("error date")
     }
     if (!(newOrderPackage.endHour > newOrderPackage.beginingHour)) {
