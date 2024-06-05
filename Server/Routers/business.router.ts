@@ -1,5 +1,5 @@
 import express from 'express';
-import { get, put } from '../Controllers/business.Controller';
+import { get, put } from '../Controllers/business.controller';
 const router = express.Router();
 
 router.get('/business', get)
