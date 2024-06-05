@@ -12,8 +12,8 @@ export const addPhotographyPackage = async (req: Request, res: Response) =>{
         const countPhotographyPackage = await PhotographyPackage_Model.find();
         const newPhotographyPackage = {
             "id": Number(PhotographyPackage.id),
-            "Type": Number(PhotographyPackage.Type),
-            "MoneyToHour": Number(PhotographyPackage.MoneyToHour),
+            "type": Number(PhotographyPackage.type),
+            "moneyToHour": Number(PhotographyPackage.moneyToHour),
         }
         const length = countPhotographyPackage.length
         if (length === 0)
@@ -41,8 +41,8 @@ export const updatePhotographyPackage = async (req: Request, res: Response) =>{
             id: id
         }, {
             $set: {
-                Type: Number(data.Type),
-                MoneyToHour: Number(data.MoneyToHour)
+                type: Number(data.type),
+                moneyToHour: Number(data.moneyToHour)
             }
         })
         res.send("Update " + id + " secceeded")
