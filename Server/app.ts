@@ -10,15 +10,18 @@ app.use(bodyParser.urlencoded({ extended: false }))
 
 import business_router from './Routers/business.router';
 import user_router from './Routers/user.router';
-import PhotographyPackage_Router from './Routers/PhotographyPackage.Router'
-import OrderPackage_Router from './Routers/OrderPackage.Router'
+import PhotographyPackage_Router from './Routers/PhotographyPackage.Router';
+import OrderPackage_Router from './Routers/OrderPackage.Router';
+import aouthentication_user from './Middleware/aouthentication_user.Middleware';
 
-app.use(business_router)
 app.use(user_router)
+app.use(aouthentication_user)
 app.use(PhotographyPackage_Router)
 app.use(OrderPackage_Router)
 
-app.listen(PORT, () =>{
+app.use(business_router)
+
+app.listen(PORT, () => {
   console.log(`http://localhost:${PORT}`)
-}).on('error',function(err){ console.log("Error occurred, server can't start" , err); })
+}).on('error', function (err) { console.log("Error occurred, server can't start", err); })
 
