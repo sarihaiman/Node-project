@@ -1,9 +1,10 @@
 import express from 'express';
-import { get, post, put, deleteOne } from '../Controllers/user.controller';
+import { get, post_signin, post_signup, put, deleteOne } from '../Controllers/user.controller';
 const router = express.Router();
 
 router.get('/user', get)
-router.post('/user', post)
+router.post('/user/signin', post_signin)
+router.post('/user/signup', post_signup)
 router.put('/user/:id', put)
 router.delete('/user/:id', deleteOne)
 

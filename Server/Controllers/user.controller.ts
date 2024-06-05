@@ -1,6 +1,6 @@
 import { Response, Request } from 'express';
 import bodyParser from 'body-parser';
-import { getallUsers, addUser, updateUser, deleteUser } from '../Services/user.service';
+import { getallUsers, signup, signin, updateUser, deleteUser } from '../Services/user.service';
 import express from 'express';
 const app = express()
 
@@ -11,8 +11,12 @@ export const get = async (req: Request, res: Response) => {
     await getallUsers(req, res)
 };
 
-export const post = async (req: Request, res: Response) => {
-    await addUser(req, res)
+export const post_signin = async (req: Request, res: Response) => {
+    await signin(req, res)
+}
+
+export const post_signup = async (req: Request, res: Response) => {
+    await signup(req, res)
 }
 
 export const put = async (req: Request, res: Response) => {
