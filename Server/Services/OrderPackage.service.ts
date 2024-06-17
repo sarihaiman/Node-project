@@ -24,6 +24,11 @@ export const addOrderPackage = async function (req: Request, res: Response) {
             "packageId": Number(OrderPackage.packageId),
         }
         await isCorrect(newOrderPackage)
+        try{
+            await isAvailableTime(newOrderPackage);
+        } catch (err) {
+            res.status(400).send("" + err);
+        }
         const length = countOrderPackage.length
         if (length === 0)
             newOrderPackage.id = 0;
@@ -50,6 +55,11 @@ export const updateOrderPackage = async function (req: Request, res: Response) {
             "packageId": Number(data.packageId)
         }
         await isCorrect(newOrderPackage)
+        try{
+            await isAvailableTime(newOrderPackage);
+        } catch (err) {
+            res.status(400).send("" + err);
+        }
         await OrderPackage_Model.updateOne({
             id: id
         }, {
@@ -101,7 +111,10 @@ const isCorrect = async (newOrderPackage: any) => {
     if (newOrderPackage.date < date.format(new Date(), datePattern)) {
         throw new Error("error - date pass")
     }
-    const equalsdate = await OrderPackage_Model.find({ "date": newOrderPackage.date })
+}
+
+const isAvailableTime = async (newOrderPackage: any) => {
+const equalsdate = await OrderPackage_Model.find({ "date": newOrderPackage.date })
     equalsdate.sort(function (a: any, b: any) { return a.beginingHour < b.beginingHour ? -1 : 1 });
     equalsdate.forEach((e: any) => {
         if (e['endHour'] > newOrderPackage.beginingHour) {
@@ -109,5 +122,6 @@ const isCorrect = async (newOrderPackage: any) => {
                 throw new Error("the hours is not available")
             }
         }
-    });
-}
+    })
+  }
+    
