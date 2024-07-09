@@ -1,14 +1,19 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
-import App from './App.tsx'
-import './index.css'
+// import App from './App.tsx'
+// import './index.css'
 import { ThemeProvider } from '@mui/material/styles';
-import theme from './them.ts'; // Path to your general design theme file
+import theme from './them.ts'; 
+import TopNavBar from './components/topNav.component'
+import SigninForm from './components/signIn.component.tsx'
+
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
     <ThemeProvider theme={theme}>
-         <App />
+         {/* <App /> */}
+         <TopNavBar />
+         <SigninForm />
     </ThemeProvider>
   </React.StrictMode>,
 )
