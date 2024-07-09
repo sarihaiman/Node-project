@@ -6,7 +6,7 @@ import { ThemeProvider } from '@mui/material/styles';
 import theme from './them.ts'; 
 import TopNavBar from './components/topNav.component'
 import SigninForm from './components/signIn.component.tsx'
-
+import SignUpForm from './components/signUp.component.tsx'; 
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
@@ -14,6 +14,7 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
          {/* <App /> */}
          <TopNavBar />
          <SigninForm />
+         <SignUpForm/>
     </ThemeProvider>
   </React.StrictMode>,
 )
