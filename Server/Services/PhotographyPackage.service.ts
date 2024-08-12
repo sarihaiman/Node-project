@@ -31,7 +31,7 @@ export const addPhotographyPackage = async (req: Request, res: Response) =>{
 
 export const updatePhotographyPackage = async (req: Request, res: Response) =>{
     try {
-        const id = req.params.id;
+        const id = req.params.Id;
         const data = req.body;
         if (await PhotographyPackage_Model.findOne({ "id": id }) === null) {
             res.status(404).send('PhotographyPackage not found');
@@ -53,7 +53,7 @@ export const updatePhotographyPackage = async (req: Request, res: Response) =>{
 
 export const deletePhotographyPackage = async (req: Request, res: Response) => {
     try {
-        const id = req.params.id;
+        const id = req.params.Id;
         if (await PhotographyPackage_Model.findOne({ "id": id }) === null) {
             res.status(404).send('PhotographyPackage not found');
             return
@@ -62,5 +62,5 @@ export const deletePhotographyPackage = async (req: Request, res: Response) => {
     } catch (err) {
         res.status(409).send('error!!!');
     }
-    res.send("Delete: " + req.params.id + " secceeded");
+    res.send("Delete: " + req.params.Id + " secceeded");
 }
