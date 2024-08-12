@@ -45,15 +45,18 @@ export const addOrderPackage = async function (req: Request, res: Response) {
 
 export const updateOrderPackage = async function (req: Request, res: Response) {
     try {
-        const id = Number(req.params.id);
+        const id = Number(req.params.Id);
         const data = req.body;
         const newOrderPackage = {
             "id": Number(id),
+            "userid": Number(data.userid),
             "date": Array(data.date),
             "beginingHour": Array(data.beginingHour),
             "endHour": Array(data.endHour),
             "packageId": Number(data.packageId)
         }
+        console.log(data);
+        console.log(newOrderPackage);   
         await isCorrect(newOrderPackage)
         try{
             await isAvailableTime(newOrderPackage);
@@ -80,7 +83,7 @@ export const updateOrderPackage = async function (req: Request, res: Response) {
 
 export const deleteOrderPackage = async (req: Request, res: Response) => {
     try {
-        const id = req.params.id;
+        const id = req.params.Id;
         if (await OrderPackage_Model.findOne({ "id": id }) === null) {
             res.status(404).send('OrderPackage not found');
             return
@@ -89,7 +92,7 @@ export const deleteOrderPackage = async (req: Request, res: Response) => {
     } catch (err) {
         res.status(409).send('error!!!');
     }
-    res.send("Delete: " + req.params.id + " secceeded");
+    res.send("Delete: " + req.params.Id + " secceeded");
 }
 
 const isCorrect = async (newOrderPackage: any) => {
