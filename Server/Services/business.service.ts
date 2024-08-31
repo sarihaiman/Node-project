@@ -9,6 +9,8 @@ export const getBusinessDetails = async function (req: Request, res: Response) {
 export const updateBusinessDetails = async function (req: Request, res: Response) {
     try {
         const data = req.body;
+        console.log(data);
+        console.log(business_Model);
         await business_Model.updateOne({
             
         }, {
