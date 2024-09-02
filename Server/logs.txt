@@ -1,0 +1,70 @@
+INFO: Calling getBusinessDetails function
+INFO: Calling getBusinessDetails function
+INFO: Calling getBusinessDetails function
+INFO: Calling getBusinessDetails function
+INFO: Calling getBusinessDetails function
+INFO: Calling getBusinessDetails function
+INFO: Calling getBusinessDetails function
+INFO: Calling getBusinessDetails function
+INFO: Calling getBusinessDetails function
+INFO: Calling getBusinessDetails function
+INFO: Calling updateBusinessDetails function
+INFO: Calling getBusinessDetails function
+[2024-09-02T11:26:01.314Z] INFO: Calling getBusinessDetails function
+[2024-09-02T11:26:03.085Z] INFO: Calling getBusinessDetails function
+[2024-09-02T11:26:03.376Z] INFO: Calling getBusinessDetails function
+[2024-09-02T11:26:03.563Z] INFO: Calling getBusinessDetails function
+[2024-09-02T11:26:03.737Z] INFO: Calling getBusinessDetails function
+[2024-09-02T11:26:22.108Z] INFO: Calling updateBusinessDetails function
+[2024-09-02T11:26:24.057Z] INFO: Calling getBusinessDetails function
+[2024-09-02T11:26:42.619Z] INFO: Calling getBusinessDetails function
+[2024-09-02T11:26:43.837Z] INFO: Calling getBusinessDetails function
+[2024-09-02T11:26:43.995Z] INFO: Calling getBusinessDetails function
+[2024-09-02T11:26:44.216Z] INFO: Calling getBusinessDetails function
+[2024-09-02T11:26:44.399Z] INFO: Calling getBusinessDetails function
+[2024-09-02T11:26:44.591Z] INFO: Calling getBusinessDetails function
+[2024-09-02T11:26:44.797Z] INFO: Calling getBusinessDetails function
+[2024-09-02T11:26:44.997Z] INFO: Calling getBusinessDetails function
+[2024-09-02T11:26:45.236Z] INFO: Calling getBusinessDetails function
+[2024-09-02T11:26:45.424Z] INFO: Calling getBusinessDetails function
+[2024-09-02T11:26:45.662Z] INFO: Calling getBusinessDetails function
+[2024-09-02T11:26:45.829Z] INFO: Calling getBusinessDetails function
+[2024-09-02T11:26:46.042Z] INFO: Calling getBusinessDetails function
+[2024-09-02T11:26:46.231Z] INFO: Calling getBusinessDetails function
+[2024-09-02T11:26:46.453Z] INFO: Calling getBusinessDetails function
+[2024-09-02T11:26:46.645Z] INFO: Calling getBusinessDetails function
+[2024-09-02T11:26:46.800Z] INFO: Calling getBusinessDetails function
+[2024-09-02T11:26:46.998Z] INFO: Calling getBusinessDetails function
+[2024-09-02T11:26:47.185Z] INFO: Calling getBusinessDetails function
+[2024-09-02T11:26:47.388Z] INFO: Calling getBusinessDetails function
+[2024-09-02T11:26:47.590Z] INFO: Calling getBusinessDetails function
+[2024-09-02T11:26:47.835Z] INFO: Calling getBusinessDetails function
+[2024-09-02T11:26:47.995Z] INFO: Calling getBusinessDetails function
+[2024-09-02T11:26:48.199Z] INFO: Calling getBusinessDetails function
+[2024-09-02T11:26:48.387Z] INFO: Calling getBusinessDetails function
+[2024-09-02T11:26:48.578Z] INFO: Calling getBusinessDetails function
+[2024-09-02T11:26:48.782Z] INFO: Calling getBusinessDetails function
+[2024-09-02T11:26:48.969Z] INFO: Calling getBusinessDetails function
+[2024-09-02T11:26:49.164Z] INFO: Calling getBusinessDetails function
+[2024-09-02T11:26:49.348Z] INFO: Calling getBusinessDetails function
+[2024-09-02T11:26:49.545Z] INFO: Calling getBusinessDetails function
+[2024-09-02T11:26:49.764Z] INFO: Calling getBusinessDetails function
+[2024-09-02T11:26:49.928Z] INFO: Calling getBusinessDetails function
+[2024-09-02T11:27:13.233Z] INFO: Calling getBusinessDetails function
+[2024-09-02T11:27:26.488Z] INFO: Calling getBusinessDetails function
+[2.9.2024, 14:28:28] INFO: Calling getBusinessDetails function
+[2.9.2024, 14:28:39] INFO: Calling getBusinessDetails function
+[2.9.2024, 14:28:41] INFO: Calling updateBusinessDetails function
+[2.9.2024, 14:28:43] INFO: Calling getBusinessDetails function
+[2.9.2024, 14:29:09] INFO: Calling getBusinessDetails function
+[2.9.2024, 14:35:09] INFO: GET request received at /OrderPackage
+[2.9.2024, 14:35:14] INFO: GET request received at /PhotographyPackage
+[2.9.2024, 14:35:34] INFO: POST request received at /PhotographyPackage
+[2.9.2024, 14:35:40] INFO: POST request received at /PhotographyPackage
+[2.9.2024, 14:35:43] INFO: GET request received at /PhotographyPackage
+[2.9.2024, 14:36:06] INFO: POST request received at /signup
+[2.9.2024, 14:36:13] INFO: POST request received at /signup
+[2.9.2024, 14:36:27] INFO: POST request received at /signin
+[2.9.2024, 14:49:17] INFO: GET request received at /business
+[2.9.2024, 14:49:21] INFO: PUT request received at /business
+[2.9.2024, 14:49:23] INFO: GET request received at /business
