@@ -7,6 +7,7 @@ import theme from './them.ts';
 import TopNavBar from './components/topNav.component'
 import SigninForm from './components/signIn.component.tsx'
 import SignUpForm from './components/signUp.component.tsx'; 
+import FileUpload from './components/upload.component.tsx'; 
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
@@ -15,6 +16,7 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
          <TopNavBar />
          <SigninForm />
          <SignUpForm/>
+         <FileUpload/>
     </ThemeProvider>
   </React.StrictMode>,
 )
