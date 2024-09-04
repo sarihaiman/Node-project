@@ -1,7 +1,10 @@
 
 import { useState } from 'react';
 import { TextField, Button } from '@mui/material';
-import axios from 'axios';
+import { SignUp } from '../api/user.api';
+
+// import axios from 'axios';
+import { User } from '../interface/user.interface';
 
 const inputStyle = {
     height: '75px',
@@ -10,7 +13,7 @@ const inputStyle = {
 
 export default function SignUpForm() {
 
-    const port = 6000;
+    // const port = 6000;
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [emailError, setEmailError] = useState('');
@@ -54,31 +57,40 @@ export default function SignUpForm() {
     };
 
     const handleSignUp = async () => {
-        setEmailError('');
-        setPasswordError('');
-        setNameError('');
-        setPhoneError('');
+        // setEmailError('');
+        // setPasswordError('');
+        // setNameError('');
+        // setPhoneError('');
         validateEmail(email);
         validatePassword(password);
         validateName(name);
         validatePhone(phone);
-
+        // console.log(emailError);
+        // console.log(phoneError);
+        // console.log(nameError);
+        // console.log(passwordError);
+        // if(!(emailError!=' '|| phoneError!=' '|| nameError!=' '|| passwordError!=' '))
         try {
-            const response = await axios.post(`http://localhost:${port}/signin`, {
-                email: email,
-                password: password
-            }, {
-                headers: {
-                    "Content-Type": "application/json",
-                }
-            });
-
+            const user : User = {
+                email, 
+                password,
+                phone,
+                id: '',
+                username: ''
+            };
+            const response = await SignUp(user);
+            setEmail('')
+            setName('')
+            setPassword('')
+            setPhone('')
             console.log('SignUp successful:', response.data);
             // Add logic here to handle successful SignUp
         } catch (error) {
             console.error('Error logging in:', error);
             // Add logic here to handle SignUp error
         }
+        // else
+        // alert("error")
     };
 
     return (
@@ -122,6 +134,6 @@ export default function SignUpForm() {
             />
             <br /><br /><br />
             <Button variant="contained" onClick={handleSignUp}>SignUp</Button>
-        </div>
+            </div>
     );
 }
