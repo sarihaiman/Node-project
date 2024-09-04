@@ -9,7 +9,7 @@ const inputStyle = {
 };
 
 export default function SigninForm() {
-    const port = 6000;
+    const port = 3000;
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [emailError, setEmailError] = useState('');
@@ -35,8 +35,8 @@ export default function SigninForm() {
     };
 
     const handleSigninForm = async () => {
-        setEmailError('');
-        setPasswordError('');
+        // setEmailError('');
+        // setPasswordError('');
         validateEmail(email);
         validatePassword(password);
 
@@ -49,7 +49,8 @@ export default function SigninForm() {
                     "Content-Type": "application/json",
                 }
             });
-
+            setEmail('')
+            setPassword('')
             console.log('SigninForm successful:', response.data);
             // Add logic here to handle successful SigninForm
         } catch (error) {
