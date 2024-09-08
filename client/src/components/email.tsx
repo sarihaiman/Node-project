@@ -11,7 +11,7 @@ const EmailForm = () => {
 
     const sendEmail = () => {
         axios.post('http://localhost:3000/send-email', emailData)
-            .then(response => {
+            .then(() => {
                 console.log('Email sent successfully');
             })
             .catch(error => {

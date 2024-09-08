@@ -7,9 +7,11 @@ const packages = ['Chalake', 'NewBorn', 'SmathCake', 'Family', 'Children'];
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
+import { OrderPackage } from '../interface/order.interface';
+import { addOrder } from '../api/order.api';
 
 const AddOrderFormComponent = () => {
-    const [packageId, setPackageId] = useState('');
+    const [packageId, setPackageId] = useState(0);
     const [date, setDate] = useState('');
     const [beginningHour, setBeginningHour] = useState('');
     const [endHour, setEndHour] = useState('');
@@ -19,38 +21,37 @@ const AddOrderFormComponent = () => {
         setOpen(true);
     };
 
-    const handleClose = (event: React.SyntheticEvent<unknown>, reason?: string) => {
+    const handleClose = (_event: React.SyntheticEvent<unknown>, reason?: string) => {
         if (reason !== 'backdropClick') {
             setOpen(false);
         }
     };
 
     const handleAddOrder = async () => {
-        // try {
-        //     const order: OrderPackage = {
-        //         id: 0,
-        //         userId,
-        //         packageId,
-        //         date,
-        //         beginningHour,
-        //         endHour
-        //     };
-        //     console.log(order);
-        //     const response = await addOrder(order);
-        //     console.log('Order added successfully:', response);
-        //     setUserId(0);
-        //     setPackageId(0);
-        //     setDate('');
-        //     setBeginningHour('');
-        //     setEndHour('');
-        // } catch (error) {
-        //     console.log('Error adding order:', error);
-        // }
+        try {
+            const order: OrderPackage = {
+                id: 0,
+                userId:1,
+                packageId:1,
+                date,
+                beginningHour,
+                endHour
+            };
+            console.log(order);
+            const response = await addOrder(order);
+            console.log('Order added successfully:', response);
+            setPackageId(0);
+            setDate('');
+            setBeginningHour('');
+            setEndHour('');
+        } catch (error) {
+            console.log('Error adding order:', error);
+        }
     };
 
     return (
         <div>
-            <Button onClick={handleClickOpen}>Open select dialog</Button>
+            <Button variant="contained" onClick={handleClickOpen}>Open select dialog</Button>
             <Dialog disableEscapeKeyDown open={open} onClose={handleClose} maxWidth="md">
                 <DialogContent>
                     <div>
@@ -62,7 +63,7 @@ const AddOrderFormComponent = () => {
                                 <Select
                                     label="Photography Package"
                                     value={packageId}
-                                    onChange={(e) => setPackageId(e.target.value)}
+                                    onChange={(e) => setPackageId(Number(e.target.value))}
                                     style={{ width: '300px' }}>
                                     {packages.map((option) => (
                                         <MenuItem key={option} value={option}>
@@ -78,7 +79,7 @@ const AddOrderFormComponent = () => {
                             type="date"
                             value={date}
                             onChange={(e) => setDate(e.target.value)}
-                            InputLabelProps={{ style: { paddingLeft: '25px' } }} 
+                            // InputLabelProps={{ style: { paddingLeft: '25px' } }} 
                             style={{ width: '300px' }}
                         />
                         <br /><br /><br />
@@ -87,7 +88,7 @@ const AddOrderFormComponent = () => {
                             type="time"
                             value={beginningHour}
                             onChange={(e) => setBeginningHour(e.target.value)}
-                            InputLabelProps={{ style: { paddingLeft: '25px' } }} 
+                            // InputLabelProps={{ style: { paddingLeft: '25px' } }} 
                             style={{ width: '300px' }}
                         />
                         <br /><br /><br />
@@ -96,7 +97,7 @@ const AddOrderFormComponent = () => {
                             type="time"
                             value={endHour}
                             onChange={(e) => setEndHour(e.target.value)}
-                            InputLabelProps={{ style: { paddingLeft: '25px' } }}
+                            // InputLabelProps={{ style: { paddingLeft: '25px' } }}
                             style={{ width: '300px' }}
                         />
                         <br />

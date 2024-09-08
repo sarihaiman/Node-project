@@ -8,7 +8,7 @@ import TopNavBar from './components/topNav.component'
 import SigninForm from './components/signIn.component.tsx'
 import SignUpForm from './components/signUp.component.tsx'; 
 import FileUpload from './components/upload.component.tsx'; 
-import AddOrderFormComponent from './components/ordaer.tsx'; 
+import AddOrderFormComponent from './components/ordaer.component.tsx'; 
 
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
