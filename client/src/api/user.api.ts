@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { domain } from '../Config';
-import { SignInData, User , SignUpData } from "../interface/user.interface";
+import { SignInData, User  } from "../interface/user.interface";
 
 export const SignIn = async (data: SignInData) => {
     try {
