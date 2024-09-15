@@ -3,6 +3,8 @@ import Box from '@mui/material/Box';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import logo from '../assets/logo.jpg'
+import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
+
 
 export default function TopNav() {
   const [value, setValue] = React.useState(0);
@@ -17,7 +19,7 @@ export default function TopNav() {
       <Tabs value={value} onChange={handleChange}>
         <Tab label="home" />
         <Tab label="gallery" />
-        <Tab label="orders" />
+        <Tab label="orders" component={Link} to="/order"/>
         <Tab label="contact" />
       </Tabs>
     </Box>

@@ -4,9 +4,12 @@ import TopNavComponent from './components/topNav.component';
 import SigninFormComponent from './components/signIn.component.tsx';
 import SignupFormComponent from './components/signUp.component.tsx';
 import OrderFormComponent from './components/ordaer.component.tsx';
-import { SignUp } from './api/user.api.ts';
+import { Provider } from 'react-redux';
+import { store } from './redux/store.ts';
+
 function App() {
   return (
+    <Provider store={store}>
     <Router>
       <Routes>
         <Route path="/" element={<TopNavComponent/>} />
@@ -15,6 +18,9 @@ function App() {
         <Route path="/Order" element={<OrderFormComponent />} />
       </Routes>
     </Router>
+    </Provider>
   );
 }
 export default App;
+
+
