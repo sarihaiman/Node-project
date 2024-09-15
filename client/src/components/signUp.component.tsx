@@ -2,6 +2,8 @@
 import { useState } from 'react';
 import { TextField, Button } from '@mui/material';
 import { SignUp } from '../api/user.api';
+import { FillDataCurrentUser } from '../redux/userAction'; // Import your Redux action creator
+import { useDispatch } from 'react-redux';
 
 // import axios from 'axios';
 import { User } from '../interface/user.interface';
@@ -13,6 +15,7 @@ const inputStyle = {
 
 export default function SignUpForm() {
 
+    const dispatch = useDispatch();
     // const port = 6000;
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -55,7 +58,7 @@ export default function SignUpForm() {
             setPasswordError('Password must be at least 8 characters long');
         }
     };
-
+    
     const handleSignUp = async () => {
         // setEmailError('');
         // setPasswordError('');
@@ -83,6 +86,7 @@ export default function SignUpForm() {
             setName('')
             setPassword('')
             setPhone('')
+            dispatch(FillDataCurrentUser(user));
             console.log('SignUp successful:', response.data);
             // Add logic here to handle successful SignUp
         } catch (error) {
@@ -92,6 +96,7 @@ export default function SignUpForm() {
         // else
         // alert("error")
     };
+
 
     return (
         <div>
@@ -135,5 +140,6 @@ export default function SignUpForm() {
             <br /><br /><br />
             <Button variant="contained" onClick={handleSignUp}>SignUp</Button>
             </div>
+            
     );
 }

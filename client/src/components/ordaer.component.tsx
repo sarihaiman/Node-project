@@ -12,6 +12,7 @@ import { addOrder } from '../api/order.api';
 
 const AddOrderFormComponent = () => {
     const [packageId, setPackageId] = useState(0);
+    const [packageName, setPackageName] = useState('');
     const [date, setDate] = useState('');
     const [beginningHour, setBeginningHour] = useState('');
     const [endHour, setEndHour] = useState('');
@@ -62,8 +63,8 @@ const AddOrderFormComponent = () => {
                                 <InputLabel id="demo-simple-select-label">Photography Package</InputLabel>
                                 <Select
                                     label="Photography Package"
-                                    value={packageId}
-                                    onChange={(e) => setPackageId(Number(e.target.value))}
+                                    value={packageName}
+                                    onChange={(e) => setPackageName(e.target.value)}
                                     style={{ width: '300px' }}>
                                     {packages.map((option) => (
                                         <MenuItem key={option} value={option}>

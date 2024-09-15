@@ -39,7 +39,6 @@ export default function SigninForm() {
         // setPasswordError('');
         validateEmail(email);
         validatePassword(password);
-
         try {
             const response = await axios.post(`http://localhost:${port}/signin`, {
                 email: email,
