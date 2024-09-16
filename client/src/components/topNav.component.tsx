@@ -20,7 +20,7 @@ export default function TopNav() {
         <Tab label="home" component={Link} to="/home"/>
         <Tab label="gallery" />
         <Tab label="orders" component={Link} to="/order"/>
-        <Tab label="contact" />
+        <Tab label="contact" component={Link} to="/contact"/>
       </Tabs>
     </Box>
   );
