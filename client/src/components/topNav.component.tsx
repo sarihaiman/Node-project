@@ -14,10 +14,10 @@ export default function TopNav() {
   };
 
   return (
-    <Box sx={{ display: 'flex', alignItems: 'center', width: '100%', bgcolor: 'background.paper', '& .MuiTab-root': { '&:focus': { outline: 'none' }, '&.Mui-selected': { outline: 'none' }} }}>
-      <img src={logo} alt="Logo" style={{ marginRight: '5px', height:'50px'}} />
+    <Box sx={{ marginBottom: '20px' , marginLeft: '8px' ,display: 'flex', alignItems: 'center', width: '100%', bgcolor: 'background.paper', '& .MuiTab-root': { '&:focus': { outline: 'none' }, '&.Mui-selected': { outline: 'none' }} }}>
+      <img src={logo} alt="Logo" style={{marginLeft: '30px', marginRight: '5px', height:'50px'}} />
       <Tabs value={value} onChange={handleChange}>
-        <Tab label="home" />
+        <Tab label="home" component={Link} to="/home"/>
         <Tab label="gallery" />
         <Tab label="orders" component={Link} to="/order"/>
         <Tab label="contact" />

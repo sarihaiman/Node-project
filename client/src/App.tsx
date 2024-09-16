@@ -3,6 +3,7 @@ import TopNavComponent from './components/topNav.component';
 import SigninFormComponent from './components/signIn.component.tsx';
 import SignupFormComponent from './components/signUp.component.tsx';
 import OrderFormComponent from './components/ordaer.component.tsx';
+import HomeComponent from './components/home.component.tsx';
 import ButtonNav from './components/buttonNuv.components.tsx';
 import ChatbotComponent from './components/ChatBot/chatbot.components.tsx';
 import { Provider } from 'react-redux';
@@ -19,6 +20,7 @@ function App() {
           <Route path="/signIn" element={<SigninFormComponent />} />
           <Route path="/signUp" element={<SignupFormComponent />} />
           <Route path="/Order" element={<OrderFormComponent />} />
+          <Route path="/home" element={<HomeComponent />} />
         </Routes>
       </Router>
       {/* <ChatbotComponent/> */}
