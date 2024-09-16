@@ -1,12 +1,7 @@
-
 import { useState } from 'react';
-import { TextField, Button } from '@mui/material';
+import { TextField, Button, Typography } from '@mui/material';
 import axios from 'axios';
-
-const inputStyle = {
-    height: '75px',
-    width: '300px'
-};
+import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
 
 export default function SigninForm() {
     const port = 3000;
@@ -35,8 +30,6 @@ export default function SigninForm() {
     };
 
     const handleSigninForm = async () => {
-        // setEmailError('');
-        // setPasswordError('');
         validateEmail(email);
         validatePassword(password);
         try {
@@ -48,28 +41,45 @@ export default function SigninForm() {
                     "Content-Type": "application/json",
                 }
             });
-            setEmail('')
-            setPassword('')
+            setEmail('');
+            setPassword('');
             console.log('SigninForm successful:', response.data);
-            // Add logic here to handle successful SigninForm
         } catch (error) {
             console.error('Error logging in:', error);
-            // Add logic here to handle SigninForm error
         }
     };
 
+    const containerStyle: React.CSSProperties = {
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        justifyContent: 'center',
+        width: '400px',
+        padding: '20px',
+        border: '2px solid #ccc',
+        borderRadius: '10px',
+        margin: 'auto',
+        marginTop: '10vh',
+        marginBottom: '10vh',
+    };
+
+    const inputStyle: React.CSSProperties = {
+        height: '55px',
+        width: '100%',
+        marginBottom: '30px',
+    };
+
     return (
-        <div>
-            <h1>Sign In</h1>
+        <div style={containerStyle}>
+            <Typography variant="h4">Sign In</Typography>
             <TextField
                 label="Email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 error={emailError ? true : false}
                 helperText={emailError}
-                style={inputStyle} // Apply the fixed height style to the Email input field
+                style={inputStyle}
             />
-            <br /><br /><br />
             <TextField
                 label="Password"
                 type="password"
@@ -77,10 +87,13 @@ export default function SigninForm() {
                 onChange={(e) => setPassword(e.target.value)}
                 error={passwordError ? true : false}
                 helperText={passwordError}
-                style={inputStyle} // Apply the fixed height style to the Password input field
+                style={inputStyle}
             />
-            <br /><br /><br />
             <Button variant="contained" onClick={handleSigninForm}>Signin</Button>
+            <Typography variant="body1" style={{ marginTop: '10px' }}>
+                Not registered yet? 
+                <Button color="primary" component={Link} to="/signUp">signUp</Button>
+            </Typography>
         </div>
     );
 }
