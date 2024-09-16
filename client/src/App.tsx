@@ -5,22 +5,23 @@ import SignupFormComponent from './components/signUp.component.tsx';
 import OrderFormComponent from './components/ordaer.component.tsx';
 import ButtonNav from './components/buttonNuv.components.tsx';
 import ChatbotComponent from './components/ChatBot/chatbot.components.tsx';
-
 import { Provider } from 'react-redux';
 import { store } from './redux/store.ts';
+import { SignIn } from './api/user.api.ts';
 
 function App() {
   return (
     <Provider store={store}>
       <Router>
+          <TopNavComponent/>
         <Routes>
-          <Route path="/" element={<TopNavComponent />} />
+          <Route path="/" element={<SigninFormComponent />} />
           <Route path="/signIn" element={<SigninFormComponent />} />
           <Route path="/signUp" element={<SignupFormComponent />} />
           <Route path="/Order" element={<OrderFormComponent />} />
         </Routes>
       </Router>
-      <ChatbotComponent/>
+      {/* <ChatbotComponent/> */}
       <ButtonNav />
     </Provider>
   );
