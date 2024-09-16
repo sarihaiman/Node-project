@@ -2,38 +2,23 @@ import { useState } from 'react';
 import { TextField, Button, Typography, FormControl, InputLabel } from '@mui/material';
 import React from 'react';
 import { Select, MenuItem } from '@mui/material';
-import Box from '@mui/material/Box';
-const packages = ['Chalake', 'NewBorn', 'SmathCake', 'Family', 'Children'];
-import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
-import DialogContent from '@mui/material/DialogContent';
 import { OrderPackage } from '../interface/order.interface';
 import { addOrder } from '../api/order.api';
 
+const packages = ['Chalake', 'NewBorn', 'SmathCake', 'Family', 'Children'];
+
 const AddOrderFormComponent = () => {
-    const [packageId, setPackageId] = useState(0);
     const [packageName, setPackageName] = useState('');
     const [date, setDate] = useState('');
     const [beginningHour, setBeginningHour] = useState('');
     const [endHour, setEndHour] = useState('');
-    const [open, setOpen] = React.useState(false);
-
-    const handleClickOpen = () => {
-        setOpen(true);
-    };
-
-    const handleClose = (_event: React.SyntheticEvent<unknown>, reason?: string) => {
-        if (reason !== 'backdropClick') {
-            setOpen(false);
-        }
-    };
 
     const handleAddOrder = async () => {
         try {
             const order: OrderPackage = {
                 id: 0,
-                userId:1,
-                packageId:1,
+                userId: 1,
+                packageId: 1,
                 date,
                 beginningHour,
                 endHour
@@ -41,7 +26,7 @@ const AddOrderFormComponent = () => {
             console.log(order);
             const response = await addOrder(order);
             console.log('Order added successfully:', response);
-            setPackageId(0);
+            setPackageName('');
             setDate('');
             setBeginningHour('');
             setEndHour('');
@@ -50,73 +35,67 @@ const AddOrderFormComponent = () => {
         }
     };
 
+    const containerStyle: React.CSSProperties = {
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        justifyContent: 'center',
+        width: '400px',
+        padding: '20px',
+        border: '2px solid #ccc',
+        borderRadius: '10px',
+        margin: 'auto',
+        marginTop: '8vh',
+        marginBottom: '10vh',
+    };
+
+    const inputStyle: React.CSSProperties = {
+        height: '55px',
+        width: '100%',
+        marginBottom: '30px',
+    };
+
     return (
-        <div>
-            <Button variant="contained" onClick={handleClickOpen}>Open select dialog</Button>
-            <Dialog disableEscapeKeyDown open={open} onClose={handleClose} maxWidth="md">
-                <DialogContent>
-                    <div>
-                        <Typography variant="h4">Add Order Form</Typography>
-                        <br />
-                        <Box sx={{ minWidth: 300 }}>
-                            <FormControl fullWidth>
-                                <InputLabel id="demo-simple-select-label">Photography Package</InputLabel>
-                                <Select
-                                    label="Photography Package"
-                                    value={packageName}
-                                    onChange={(e) => setPackageName(e.target.value)}
-                                    style={{ width: '300px' }}>
-                                    {packages.map((option) => (
-                                        <MenuItem key={option} value={option}>
-                                            {option}
-                                        </MenuItem>
-                                    ))}
-                                </Select>
-                            </FormControl>
-                        </Box>
-                        <br /><br />
-                        <TextField
-                            label="Date"
-                            type="date"
-                            value={date}
-                            onChange={(e) => setDate(e.target.value)}
-                            // InputLabelProps={{ style: { paddingLeft: '25px' } }} 
-                            style={{ width: '300px' }}
-                        />
-                        <br /><br /><br />
-                        <TextField
-                            label="Beginning Hour"
-                            type="time"
-                            value={beginningHour}
-                            onChange={(e) => setBeginningHour(e.target.value)}
-                            // InputLabelProps={{ style: { paddingLeft: '25px' } }} 
-                            style={{ width: '300px' }}
-                        />
-                        <br /><br /><br />
-                        <TextField
-                            label="End Hour"
-                            type="time"
-                            value={endHour}
-                            onChange={(e) => setEndHour(e.target.value)}
-                            // InputLabelProps={{ style: { paddingLeft: '25px' } }}
-                            style={{ width: '300px' }}
-                        />
-                        <br />
-                    </div>
-                </DialogContent>
-                <DialogActions>
-                    <Button onClick={handleClose}>Cancel</Button>
-                    <Button onClick={handleAddOrder}>Ok</Button>
-                </DialogActions>
-            </Dialog>
+        <div style={containerStyle}>
+            <Typography variant="h4">Add Order Form</Typography>
+            <FormControl fullWidth style={inputStyle}>
+                <InputLabel id="demo-simple-select-label">Photography Package</InputLabel>
+                <Select
+                    label="Photography Package"
+                    value={packageName}
+                    onChange={(e) => setPackageName(e.target.value)}
+                >
+                    {packages.map((option) => (
+                        <MenuItem key={option} value={option}>
+                            {option}
+                        </MenuItem>
+                    ))}
+                </Select>
+            </FormControl>
+            <TextField
+                label="Date"
+                type="date"
+                value={date}
+                onChange={(e) => setDate(e.target.value)}
+                style={inputStyle}
+            />
+            <TextField
+                label="Beginning Hour"
+                type="time"
+                value={beginningHour}
+                onChange={(e) => setBeginningHour(e.target.value)}
+                style={inputStyle}
+            />
+            <TextField
+                label="End Hour"
+                type="time"
+                value={endHour}
+                onChange={(e) => setEndHour(e.target.value)}
+                style={inputStyle}
+            />
+            <Button variant="contained" onClick={handleAddOrder}>Add Order</Button>
         </div>
     );
 };
 
 export default AddOrderFormComponent;
-
-
-
-
-
-
