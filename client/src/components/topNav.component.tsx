@@ -18,7 +18,7 @@ export default function TopNav() {
       <img src={logo} alt="Logo" style={{marginLeft: '30px', marginRight: '5px', height:'50px'}} />
       <Tabs value={value} onChange={handleChange}>
         <Tab label="home" component={Link} to="/home"/>
-        <Tab label="gallery" />
+        <Tab label="gallery" component={Link} to="/gallery"/>
         <Tab label="orders" component={Link} to="/order"/>
         <Tab label="contact" component={Link} to="/contact"/>
       </Tabs>
