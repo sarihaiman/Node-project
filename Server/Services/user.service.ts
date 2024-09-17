@@ -20,7 +20,7 @@ export const signin = async (req: Request, res: Response) => {
         }
         const user = await user_Model.findOne({ email })
         if (user && (await bcrypt.compare(password, user.password!))) {
-            const token = "Bearer " + jwt.sign({ email, isAdmin: user.isAdmin },
+            const token = "Bearer " + jwt.sign({ email, isAdmin: user.isAdmin , phone:user.phone , name: user.name , id: user.id },
                 SECRET_KEY!, {
                 expiresIn: '2h'
             }
