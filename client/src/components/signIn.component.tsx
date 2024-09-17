@@ -2,6 +2,12 @@ import { useState } from 'react';
 import { TextField, Button, Typography } from '@mui/material';
 import axios from 'axios';
 import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
+import { FillDataCurrentUser } from '../redux/userAction';
+import { useDispatch } from 'react-redux';
+import { User } from '../interface/user.interface';
+import jwt from 'jsonwebtoken';
+import { jwtDecode } from 'jwt-decode'
+
 
 export default function SigninForm() {
     const port = 3000;
@@ -9,6 +15,7 @@ export default function SigninForm() {
     const [password, setPassword] = useState('');
     const [emailError, setEmailError] = useState('');
     const [passwordError, setPasswordError] = useState('');
+    const dispatch = useDispatch();
 
     const validateEmail = (email: string) => {
         const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
@@ -41,8 +48,19 @@ export default function SigninForm() {
                     "Content-Type": "application/json",
                 }
             });
+
+            const userDecode:any = jwtDecode(response.data);
             setEmail('');
-            setPassword('');
+            setPassword(''); 
+            const user: User = {
+                email: userDecode.email,
+                password : '',
+                phone: userDecode.phone,
+                id: userDecode.id,
+                username: userDecode.name
+            };
+            alert('hello: '+ userDecode.name)
+            dispatch(FillDataCurrentUser(user));
             console.log('SigninForm successful:', response.data);
         } catch (error) {
             console.error('Error logging in:', error);
@@ -91,7 +109,7 @@ export default function SigninForm() {
             />
             <Button variant="contained" onClick={handleSigninForm}>Signin</Button>
             <Typography variant="body1" style={{ marginTop: '10px' }}>
-                Not registered yet? 
+                Not registered yet?
                 <Button color="primary" component={Link} to="/signUp">signUp</Button>
             </Typography>
         </div>
