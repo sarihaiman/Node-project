@@ -48,7 +48,7 @@ export default function SigninForm() {
                     "Content-Type": "application/json",
                 }
             });
-
+            sessionStorage.setItem("token", response.data);
             const userDecode:any = jwtDecode(response.data);
             setEmail('');
             setPassword(''); 

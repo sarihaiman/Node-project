@@ -75,6 +75,7 @@ export default function SignUpForm() {
             setPassword('');
             setPhone('');
             dispatch(FillDataCurrentUser(user));
+            sessionStorage.setItem("token", response.data);
             console.log('SignUp successful:', response.data);
         } catch (error) {
             console.error('Error signing up:', error);
