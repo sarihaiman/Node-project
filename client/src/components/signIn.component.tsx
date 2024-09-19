@@ -56,6 +56,7 @@ export default function SigninForm() {
             };
             alert('hello: '+ userDecode.name)
             dispatch(FillDataCurrentUser(user));
+            sessionStorage.setItem("currentUser", JSON.stringify(user));
             console.log('SigninForm successful:', response);
         } catch (error) {
             console.error('Error logging in:', error);
