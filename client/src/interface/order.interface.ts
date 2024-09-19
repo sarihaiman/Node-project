@@ -1,9 +1,9 @@
 export interface OrderPackage 
 { 
     id: number; 
-    userId: number; 
+    userid: number; 
     packageId: number; 
     date: string; 
-    beginningHour: string; 
+    beginingHour: string; 
     endHour: string; 
 }
