@@ -12,7 +12,7 @@ export const addPhotographyPackage = async (req: Request, res: Response) =>{
         const countPhotographyPackage = await PhotographyPackage_Model.find();
         const newPhotographyPackage = {
             "id": Number(PhotographyPackage.id),
-            "type": Number(PhotographyPackage.type),
+            "type": PhotographyPackage.type,
             "moneyToHour": Number(PhotographyPackage.moneyToHour),
         }
         const length = countPhotographyPackage.length
