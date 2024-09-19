@@ -3,10 +3,21 @@ import Box from '@mui/material/Box';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import logo from '../assets/logo.jpg'
-import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
-
+import { Link } from 'react-router-dom';
+import { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
+import { FillDataCurrentUser } from '../redux/userAction.ts';
 
 export default function TopNav() {
+  const dispatch = useDispatch();
+  useEffect(() => {
+    const token = sessionStorage.getItem('token');
+    const user = JSON.parse(sessionStorage.getItem('currentUser')!);
+    if (token && user) {
+      dispatch(FillDataCurrentUser(user)); // Dispatch an action to set user data in Redux
+    }
+  }, [dispatch]);
+
   const [value, setValue] = React.useState(0);
 
   const handleChange = (_event: React.SyntheticEvent, newValue: number) => {

@@ -66,7 +66,7 @@ export default function SignUpForm() {
                 email,
                 password,
                 phone,
-                id: '',
+                id: 0,
                 username: ''
             };
             const response = await SignUp(user);
@@ -75,6 +75,8 @@ export default function SignUpForm() {
             setPassword('');
             setPhone('');
             dispatch(FillDataCurrentUser(user));
+            sessionStorage.setItem("currentUser", JSON.stringify(user));
+            sessionStorage.setItem("token", response.data);
             console.log('SignUp successful:', response.data);
         } catch (error) {
             console.error('Error signing up:', error);

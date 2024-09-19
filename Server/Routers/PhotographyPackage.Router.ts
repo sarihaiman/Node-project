@@ -35,13 +35,7 @@ router.get('/PhotographyPackage', get)
  *               id:
  *                 type: integer
  *               type:
- *                 type: integer
- *                 enum:
- *                   - Chalake
- *                   - NewBorn
- *                   - SmathCake
- *                   - Family
- *                   - Children
+ *                 type: string
  *               moneyToHour:
  *                 type: integer
  *             required:
@@ -81,12 +75,6 @@ router.post('/PhotographyPackage', post)
  *                 type: integer
  *               type:
  *                 type: string
- *                 enum:
- *                   - Chalake
- *                   - NewBorn
- *                   - SmathCake
- *                   - Family
- *                   - Children
  *               moneyToHour:
  *                 type: integer
  *             required:

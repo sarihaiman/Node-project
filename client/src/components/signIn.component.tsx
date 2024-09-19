@@ -1,13 +1,12 @@
 import { useState } from 'react';
 import { TextField, Button, Typography } from '@mui/material';
 import axios from 'axios';
-import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { FillDataCurrentUser } from '../redux/userAction';
 import { useDispatch } from 'react-redux';
 import { User } from '../interface/user.interface';
-import jwt from 'jsonwebtoken';
 import { jwtDecode } from 'jwt-decode'
-
+import { SignIn } from '../api/user.api';
 
 export default function SigninForm() {
     const port = 3000;
@@ -40,16 +39,12 @@ export default function SigninForm() {
         validateEmail(email);
         validatePassword(password);
         try {
-            const response = await axios.post(`http://localhost:${port}/signin`, {
+            const response:string = await SignIn( {
                 email: email,
                 password: password
-            }, {
-                headers: {
-                    "Content-Type": "application/json",
-                }
-            });
-
-            const userDecode:any = jwtDecode(response.data);
+            })
+            sessionStorage.setItem("token", response);
+            const userDecode:any = jwtDecode(response);
             setEmail('');
             setPassword(''); 
             const user: User = {
@@ -61,7 +56,8 @@ export default function SigninForm() {
             };
             alert('hello: '+ userDecode.name)
             dispatch(FillDataCurrentUser(user));
-            console.log('SigninForm successful:', response.data);
+            sessionStorage.setItem("currentUser", JSON.stringify(user));
+            console.log('SigninForm successful:', response);
         } catch (error) {
             console.error('Error logging in:', error);
         }
