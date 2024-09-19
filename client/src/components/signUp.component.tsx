@@ -66,7 +66,7 @@ export default function SignUpForm() {
                 email,
                 password,
                 phone,
-                id: '',
+                id: 0,
                 username: ''
             };
             const response = await SignUp(user);
