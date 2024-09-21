@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import { TextField, Button, Typography } from '@mui/material';
-import axios from 'axios';
 import { Link } from 'react-router-dom';
 import { FillDataCurrentUser } from '../redux/userAction';
 import { useDispatch } from 'react-redux';
@@ -9,7 +8,6 @@ import { jwtDecode } from 'jwt-decode'
 import { SignIn } from '../api/user.api';
 
 export default function SigninForm() {
-    const port = 3000;
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [emailError, setEmailError] = useState('');

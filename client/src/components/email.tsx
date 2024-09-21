@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+client/src/componentsimport { useState } from 'react';
 import axios from 'axios';
 
 const EmailForm = () => {

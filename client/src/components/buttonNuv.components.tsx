@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { getBusinessDetaild } from '../api/business_details.api';
 import { businessDetails } from '../interface/businessDetails.interface';
-import { Typography, CircularProgress, Container, Paper , useTheme} from '@mui/material';
+import { Typography, Paper , useTheme} from '@mui/material';
 import { makeStyles } from '@mui/styles';
 
 const useStyles = makeStyles({

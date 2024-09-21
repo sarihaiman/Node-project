@@ -9,7 +9,7 @@ import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
 import { Radio, RadioGroup, FormControlLabel } from '@material-ui/core';
 import { useState } from 'react';
-import { colors, Typography } from '@mui/material';
+import { Typography } from '@mui/material';
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
     '& .MuiDialogContent-root': {

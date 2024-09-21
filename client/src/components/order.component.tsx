@@ -5,7 +5,6 @@ import { OrderPackage } from '../interface/order.interface';
 import { getAllPotograpyName, addOrderPackage } from '../api/order.api';
 import isTokenValid from '../utils/checkToken';
 import { useSelector } from 'react-redux';
-import axios from 'axios';
 
 const AddOrderFormComponent = () => {
     const [packageName, setPackageName] = useState('');
