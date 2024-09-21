@@ -1,9 +1,10 @@
-import React, { useState } from 'react';
-import { Grid, TextField, Button, Typography, Box } from '@material-ui/core';
-import { WhatsApp, Phone, Email, Message } from '@material-ui/icons';
+import { useState } from 'react';
+import { Grid, TextField, Button, Box } from '@material-ui/core';
+import { WhatsApp, Phone, Email, Message, Chat } from '@material-ui/icons'; // Import the Chat icon
 
 const Contact = () => {
     const [showMessageForm, setShowMessageForm] = useState(false);
+    // const [showChat, setShowChat] = useState(false);
     const [formData, setFormData] = useState({
         name: '',
         email: '',
@@ -26,6 +27,15 @@ const Contact = () => {
     const handleDirectMessageClick = () => {
         setShowMessageForm(true);
     };
+
+    const handleChatClick = () => {
+        // setShowChat(true);
+
+    };
+
+    // const handleChatClick = () => {
+    //     window.location.href = 'http://localhost:5173/chat';
+    // };
 
     const handleFormSubmit = (e: { preventDefault: () => void; }) => {
         e.preventDefault();
@@ -59,6 +69,7 @@ const Contact = () => {
                     <Grid item><Email onClick={handleEmailClick} style={{ cursor: 'pointer', fontSize: 50 }} /></Grid>
                     <Grid item><Phone onClick={handlePhoneClick} style={{ cursor: 'pointer', fontSize: 50 }} /></Grid>
                     <Grid item><Message onClick={handleDirectMessageClick} style={{ cursor: 'pointer', fontSize: 50 }} /></Grid>
+                    <Grid item><Chat onClick={handleChatClick} style={{ cursor: 'pointer', fontSize: 50 }} /></Grid> {/* Add the Chat icon */}
                 </Grid>
             </Box>
             {showMessageForm && (
