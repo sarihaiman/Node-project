@@ -64,7 +64,7 @@ const Contact = () => {
     return (
         <Grid container direction="column" alignItems="center">
             <Box display="flex" justifyContent="center" style={{ padding: '20px', margin: '20px' }}>
-                <Grid container spacing={10} justify="center">
+                <Grid container spacing={10} justifyContent="center"> {/* Update 'justify' to 'justifyContent' */}
                     <Grid item><WhatsApp onClick={handleWhatsAppClick} style={{ cursor: 'pointer', fontSize: 50 }} /></Grid>
                     <Grid item><Email onClick={handleEmailClick} style={{ cursor: 'pointer', fontSize: 50 }} /></Grid>
                     <Grid item><Phone onClick={handlePhoneClick} style={{ cursor: 'pointer', fontSize: 50 }} /></Grid>
