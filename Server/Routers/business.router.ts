@@ -50,8 +50,8 @@ router.get('/business', get)
  *       404:
  *         description: business not found
  */
-router.put('/business', put)
 
+router.put('/business', put)
 // router.put('/business',aouthentication_admin, put)
 
 export default router;

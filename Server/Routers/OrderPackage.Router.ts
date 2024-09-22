@@ -1,6 +1,8 @@
 import express from 'express';
 import {get,post,put,deleteOne}  from '../Controllers/OrderPackage.Controller';
 const router = express.Router();
+import aouthentication_user from '../Middleware/aouthentication_user.Middleware';
+import aouthentication_admin from '../Middleware/aouthentication_admin.middleware';
 
 /**
  * @swagger
@@ -13,7 +15,7 @@ const router = express.Router();
  *       200:
  *         description: successful operation
  */
-router.get('/OrderPackage', get)
+router.get('/OrderPackage', aouthentication_user,get)
 
 /**
  * @swagger
@@ -52,7 +54,7 @@ router.get('/OrderPackage', get)
  *       200:
  *         description: successful operation
  */
-router.post('/OrderPackage', post)
+router.post('/OrderPackage',aouthentication_user, post)
 
 /**
  * @swagger
@@ -101,7 +103,7 @@ router.post('/OrderPackage', post)
  *       404:
  *         description: OrderPackage not found
  */
-router.put('/OrderPackage/:Id', put)
+router.put('/OrderPackage/:Id',aouthentication_admin, put)
 
 /**
  * @swagger
@@ -124,7 +126,7 @@ router.put('/OrderPackage/:Id', put)
  *       404:
  *         description: OrderPackage not found
  */
-router.delete('/OrderPackage/:Id', deleteOne)
+router.delete('/OrderPackage/:Id',aouthentication_admin, deleteOne)
 
 
 export default router;

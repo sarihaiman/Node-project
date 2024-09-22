@@ -80,7 +80,7 @@ router.post('/signin', post_signin)
  *       200:
  *         description: successful operation
  */
-router.get('/user', get)
+router.get('/user',aouthentication_admin, get)
 
 /**
  * @swagger
@@ -128,7 +128,7 @@ router.get('/user', get)
  *       404:
  *         description: OrderPackage not found
  */
-router.put('/user/:id', put)
+router.put('/user/:id',aouthentication_admin, put)
 
 /**
  * @swagger
