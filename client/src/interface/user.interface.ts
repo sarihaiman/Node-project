@@ -1,6 +1,6 @@
 export interface User {
     id: number;
-    username: string,
+    name: string,
     password: string,
     email: string,
     phone: string,
@@ -13,7 +13,7 @@ export interface SignInData {
 }
 
 export interface SignUpData {
-    username: string,
+    name: string,
     password: string,
     email: string,
     phone: string,
