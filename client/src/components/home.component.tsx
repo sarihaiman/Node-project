@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import a from '../assets/a.jpg';
-import b from '../assets/b.jpg';
-import c from '../assets/c.jpg';
-import d from '../assets/d.jpg';
+import a from '../assets/logo.jpg';
+import b from '../assets/logo.jpg';
+import c from '../assets/logo.jpg';
+import d from '../assets/logo.jpg';
 
 const Home = () => {
     const imagePaths = [a, b, c, d];

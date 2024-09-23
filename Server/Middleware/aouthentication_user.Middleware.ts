@@ -1,11 +1,10 @@
 import { Response, Request } from 'express';
 import dotenv from 'dotenv';
-require('dotenv').config()
+dotenv.config()
 const SECRET_KEY = process.env.SECRET_KEY
 import jwt from 'jsonwebtoken';
 
 const aouthentication_user = ((req: Request, res: Response, next: () => any) => {
-
   let token = req.body.token || req.query.token || req.headers.token;
   token = token.slice(7);
   if (!token) {

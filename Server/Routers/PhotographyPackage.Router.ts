@@ -3,9 +3,6 @@ import {get,post,put,deleteOne} from '../Controllers/PhotographyPackage.Controll
 import aouthentication_admin from '../Middleware/aouthentication_admin.middleware';
 const router = express.Router();
 
-
-
-
 /**
  * @swagger
  * /PhotographyPackage:
@@ -17,6 +14,7 @@ const router = express.Router();
  *       200:
  *         description: successful operation
  */
+
 router.get('/PhotographyPackage', get)
 
 /**
@@ -47,8 +45,8 @@ router.get('/PhotographyPackage', get)
  *       200:
  *         description: successful operation
  */
-// router.post('/PhotographyPackage', aouthentication_admin, post)
-router.post('/PhotographyPackage', post)
+
+router.post('/PhotographyPackage', aouthentication_admin, post)
 
 
 /**
@@ -89,8 +87,8 @@ router.post('/PhotographyPackage', post)
  *       404:
  *         description: PhotographyPackage not found
  */
-// router.put('/PhotographyPackage/:Id', aouthentication_admin, put)
-router.put('/PhotographyPackage/:Id', put)
+
+router.put('/PhotographyPackage/:Id', aouthentication_admin, put)
 
 
 
@@ -115,8 +113,7 @@ router.put('/PhotographyPackage/:Id', put)
  *       404:
  *         description: PhotographyPackage not found
  */
-router.delete('/PhotographyPackage/:Id',deleteOne)
 
-// router.delete('/PhotographyPackage/:Id', aouthentication_admin, deleteOne)
+router.delete('/PhotographyPackage/:Id', aouthentication_admin, deleteOne)
 
 export default router;

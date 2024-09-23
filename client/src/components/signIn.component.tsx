@@ -50,7 +50,8 @@ export default function SigninForm() {
                 password : '',
                 phone: userDecode.phone,
                 id: userDecode.id,
-                username: userDecode.name
+                name: userDecode.name,
+                isAdmin: userDecode.isAdmin
             };
             alert('hello: '+ userDecode.name)
             dispatch(FillDataCurrentUser(user));

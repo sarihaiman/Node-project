@@ -1,9 +1,10 @@
 export interface User {
     id: number;
-    username: string,
+    name: string,
     password: string,
     email: string,
     phone: string,
+    isAdmin: boolean
 }
 
 export interface SignInData {
@@ -12,7 +13,7 @@ export interface SignInData {
 }
 
 export interface SignUpData {
-    username: string,
+    name: string,
     password: string,
     email: string,
     phone: string,
