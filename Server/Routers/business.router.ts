@@ -51,7 +51,6 @@ router.get('/business', get)
  *         description: business not found
  */
 
-router.put('/business', put)
-// router.put('/business',aouthentication_admin, put)
+router.put('/business',aouthentication_admin, put)
 
 export default router;

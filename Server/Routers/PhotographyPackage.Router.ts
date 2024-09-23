@@ -46,8 +46,7 @@ router.get('/PhotographyPackage', get)
  *         description: successful operation
  */
 
-// router.post('/PhotographyPackage', aouthentication_admin, post)
-router.post('/PhotographyPackage', post)
+router.post('/PhotographyPackage', aouthentication_admin, post)
 
 
 /**
@@ -89,8 +88,7 @@ router.post('/PhotographyPackage', post)
  *         description: PhotographyPackage not found
  */
 
-// router.put('/PhotographyPackage/:Id', aouthentication_admin, put)
-router.put('/PhotographyPackage/:Id', put)
+router.put('/PhotographyPackage/:Id', aouthentication_admin, put)
 
 
 
@@ -116,7 +114,6 @@ router.put('/PhotographyPackage/:Id', put)
  *         description: PhotographyPackage not found
  */
 
-router.delete('/PhotographyPackage/:Id',deleteOne)
-// router.delete('/PhotographyPackage/:Id', aouthentication_admin, deleteOne)
+router.delete('/PhotographyPackage/:Id', aouthentication_admin, deleteOne)
 
 export default router;

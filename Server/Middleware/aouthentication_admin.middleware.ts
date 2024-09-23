@@ -1,8 +1,8 @@
 import { Response, Request } from 'express';
 import dotenv from 'dotenv';
-require('dotenv').config()
+dotenv.config()
 const SECRET_KEY = process.env.SECRET_KEY
-import jwt, { JsonWebTokenError } from 'jsonwebtoken';
+import jwt from 'jsonwebtoken';
 
 const aouthentication_admin = ((req: Request, res: Response, next: () => any) => {
 
