@@ -5,7 +5,6 @@ import TopNavComponent from './components/topNav.component.tsx';
 import ChatbotComponent from './components/ChatBot/chatbot.components.tsx';
 import ButtonNav from './components/buttonNuv.components.tsx';
 import Feedback from './components/feedback.component.tsx';
-import Upload from './components/upload.component.tsx';
 import Routes from './components/routers.component.tsx';
 
 function App() {
@@ -18,7 +17,6 @@ function App() {
       <ChatbotComponent />
       <Feedback />
       <ButtonNav />
-      <Upload />
     </Provider>
   );
 }

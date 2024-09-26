@@ -6,6 +6,7 @@ import HomeComponent from '../components/home.component.tsx';
 import ContactComponent from '../components/contact.component.tsx';
 import ChatComponent from '../components/ChatBot/chatbot.components.tsx';
 import GalleryComponent from '../components/gallery.component.tsx';
+import UploadComponent from '../components/upload.component.tsx';
 import { useSelector } from 'react-redux';
 import Customers from '../components/Admin/customers.component.tsx';
 import Orders from '../components/Admin/orders.component.tsx';
@@ -27,6 +28,7 @@ const PublicRoutes = () => {
             <Route path="/contact" element={<ContactComponent />} />
             <Route path="/chat" element={<ChatComponent />} />
             <Route path="/gallery" element={<GalleryComponent />} />
+            <Route path="/upload" element={<UploadComponent />} />
             {isAdmin && <Route path="/admin/customers" element={<Customers />} />}
             {isAdmin && <Route path="/admin/orders" element={<Orders />} />}
             {isAdmin && <Route path="/admin/potographyPackage" element={<PotographyPackage />} />}

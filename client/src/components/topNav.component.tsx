@@ -44,6 +44,7 @@ export default function TopNav() {
         <Tab label="gallery" component={Link} to="/gallery" />
         <Tab label="orders" component={Link} to="/order" />
         <Tab label="contact" component={Link} to="/contact" />
+        <Tab label="upload" component={Link} to="/upload" />
         {isAdmin && <Tab label="manager" onClick={handleOpenMenu} />}
       </Tabs>
       <Popover
