@@ -1,7 +1,9 @@
 import { Response, Request } from 'express';
 import fs from 'fs';
+import path from 'path';
 // import { CustomRequest } from './CustomRequest'; 
-// import { MulterFile } from './MulterFile'; 
+import multer from 'multer';
+const upload = multer({ dest: 'uploads/' });
 
 // interface CustomRequest extends Request {
 //   file: MulterFile;
@@ -13,7 +15,20 @@ import fs from 'fs';
 //   res.status(200).send('File uploaded successfully');
 //   };
 
-export const uploadFile = async function(req: Request, res:Response) {
-
+export const uploadFile = async function (req: Request, res: Response) {
+  const originalFileName = req.file?.originalname;
+  console.log(originalFileName);
   res.status(200).send('File uploaded successfully');
-  };
+};
+
+export const getUploadFile = async function (req: Request, res: Response) {
+  const uploadDir = path.join(__dirname, '../uploads');
+  fs.readdir(uploadDir, (err, files) => {
+    if (err) {
+      console.error('Error reading upload directory:', err);
+      res.status(500).send('Error reading upload directory');
+    } else {
+      res.status(200).json({ files });
+    }
+  });
+};
