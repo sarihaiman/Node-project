@@ -2,7 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { TextField, Button, Typography, FormControl, InputLabel } from '@mui/material';
 import { Select, MenuItem } from '@mui/material';
 import { OrderPackage } from '../interface/order.interface';
-import { getAllPotograpyName, addOrderPackage } from '../api/order.api';
+import { addOrderPackage } from '../api/order.api';
+import { getAllPotograpyName } from '../api/PotographyPackage.api';
 import isTokenValid from '../utils/checkToken';
 import { useSelector } from 'react-redux';
 
