@@ -13,7 +13,7 @@ export const addPhotographyPackage = async (req: Request, res: Response) =>{
         const newPhotographyPackage = {
             "id": Number(PhotographyPackage.id),
             "type": PhotographyPackage.type,
-            "moneyToHour": Number(PhotographyPackage.moneyToHour),
+            "moneyToHour": PhotographyPackage.moneyToHour,
         }
         const length = countPhotographyPackage.length
         if (length === 0)
@@ -23,7 +23,7 @@ export const addPhotographyPackage = async (req: Request, res: Response) =>{
             newPhotographyPackage.id = lengthNow
         }
         await PhotographyPackage_Model.insertMany(newPhotographyPackage);
-        res.send("Post " + PhotographyPackage.id + " secceeded")
+        res.send(newPhotographyPackage)
     } catch (err) {
         res.status(409).send(err);
     }
@@ -41,7 +41,7 @@ export const updatePhotographyPackage = async (req: Request, res: Response) =>{
             id: id
         }, {
             $set: {
-                type: Number(data.type),
+                type: data.type,
                 moneyToHour: Number(data.moneyToHour)
             }
         })
