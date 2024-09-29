@@ -10,6 +10,8 @@ import CloseIcon from '@mui/icons-material/Close';
 import { Radio, RadioGroup, FormControlLabel } from '@material-ui/core';
 import { useState } from 'react';
 import { Typography } from '@mui/material';
+import { addfeedback } from '../api/feedback.api';
+import { feedback } from '../interface/feedback.interface';
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
     '& .MuiDialogContent-root': {
@@ -29,12 +31,29 @@ export default function CustomizedDialogs() {
         setOpen(false);
     };
 
-    const handleFeedbackChange = (event: { target: { value: any; }; }) => {
+    const handleFeedbackChange = (event: any) => {
         setFeedback(event.target.value);
     };
 
     const handleClickOpen = () => {
         setOpen(true);
+    };
+
+    const sendFeedback = async () => {
+        try {
+            const f: feedback = {
+                id: 0,
+                name: feedback,
+            };
+            const response = await addfeedback(f)
+            if (response.status === 200) {
+                handleClose();
+            } else {
+                console.error('Failed to send feedback');
+            }
+        } catch (error) {
+            console.error('Error sending feedback:', error);
+        }
     };
 
     return (
@@ -50,7 +69,7 @@ export default function CustomizedDialogs() {
                     transform: 'rotate(90deg)',
                     backgroundColor: 'rgb(111, 233, 224)',
                     '&:hover': {
-                        backgroundColor: 'rgb(111, 233, 224)', // Set the hover background color to the same blue color
+                        backgroundColor: 'rgb(111, 233, 224)',
                     }
                 }}
             >
@@ -61,7 +80,7 @@ export default function CustomizedDialogs() {
                 aria-labelledby="customized-dialog-title"
                 open={open}
             >
-                <DialogTitle sx={{ m: 0, p: 2 , color: 'rgb(111, 233, 224)'}} id="customized-dialog-title">
+                <DialogTitle sx={{ m: 0, p: 2, color: 'rgb(111, 233, 224)' }} id="customized-dialog-title">
                     Feedback
                 </DialogTitle>
                 <IconButton
@@ -81,15 +100,15 @@ export default function CustomizedDialogs() {
                         How do you feel about your visit today?
                     </Typography>
                     <RadioGroup aria-label="feedback" name="feedback" value={feedback} onChange={handleFeedbackChange} >
-                        <FormControlLabel value="Excellent" control={<Radio  style={{  color: 'black',}}/>} label="Excellent" />
-                        <FormControlLabel value="Good" control={<Radio style={{  color: 'black',}}/>} label="Good" />
-                        <FormControlLabel value="Fair" control={<Radio style={{  color: 'black',}}/>} label="Fair" />
-                        <FormControlLabel value="Poor" control={<Radio style={{  color: 'black',}}/>} label="Poor" />
-                        <FormControlLabel value="Very Poor" control={<Radio style={{  color: 'black',}}/>} label="Very Poor" />
+                        <FormControlLabel value="Excellent" control={<Radio style={{ color: 'black', }} />} label="Excellent" />
+                        <FormControlLabel value="Good" control={<Radio style={{ color: 'black', }} />} label="Good" />
+                        <FormControlLabel value="Fair" control={<Radio style={{ color: 'black', }} />} label="Fair" />
+                        <FormControlLabel value="Poor" control={<Radio style={{ color: 'black', }} />} label="Poor" />
+                        <FormControlLabel value="Very Poor" control={<Radio style={{ color: 'black', }} />} label="Very Poor" />
                     </RadioGroup>
                 </DialogContent>
                 <DialogActions>
-                    <Button autoFocus onClick={handleClose}>
+                    <Button autoFocus onClick={sendFeedback}>
                         Send
                     </Button>
                 </DialogActions>

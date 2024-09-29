@@ -13,6 +13,7 @@ import Orders from '../components/Admin/orders.component.tsx';
 import PotographyPackage from '../components/Admin/potographyPackage.component.tsx';
 import BusinessDetails from '../components/Admin/businessDetails.component.tsx';
 import UploadShowComponent from '../components/Admin/showUpload.tsx';
+import FeedbackComponent from './Admin/feedbackDiagrama.component.tsx';
 
 const PublicRoutes = () => {
     const isAdmin: boolean = useSelector((state: any) => {
@@ -35,6 +36,7 @@ const PublicRoutes = () => {
             {isAdmin && <Route path="/admin/potographyPackage" element={<PotographyPackage />} />}
             {isAdmin && <Route path="/admin/businessDetails" element={<BusinessDetails />} />}
             {isAdmin && <Route path="/admin/upload" element={<UploadShowComponent />} />}
+            {isAdmin && <Route path="/admin/feedback" element={<FeedbackComponent />} />}
         </Routes>
     );
 };
