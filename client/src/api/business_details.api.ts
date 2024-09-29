@@ -1,4 +1,6 @@
 import axios from 'axios';
+import { businessDetails } from '../interface/businessDetails.interface';
+const token = sessionStorage.getItem("token");
 
 export const getBusinessDetaild = async () => {
     try {
@@ -9,3 +11,19 @@ export const getBusinessDetaild = async () => {
         throw error;
     }
 }
+
+export const editBusinessDetaild = async (businessDetaild: businessDetails) => {
+    try {
+      console.log(businessDetaild);
+      const response = await axios.put("http://localhost:3000/business", businessDetaild, {
+        headers: {
+          'Content-Type': 'application/json',
+          "token": token
+        }
+      });
+      return response.data;
+    } catch (error) {
+      console.error('error in api request of users', error);
+      throw error;
+    }
+  }
