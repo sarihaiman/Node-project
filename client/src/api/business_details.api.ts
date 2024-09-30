@@ -1,6 +1,5 @@
 import axios from 'axios';
 import { businessDetails } from '../interface/businessDetails.interface';
-const token = sessionStorage.getItem("token");
 
 export const getBusinessDetaild = async () => {
     try {
@@ -14,7 +13,7 @@ export const getBusinessDetaild = async () => {
 
 export const editBusinessDetaild = async (businessDetaild: businessDetails) => {
     try {
-      console.log(businessDetaild);
+      const token = sessionStorage.getItem("token");
       const response = await axios.put("http://localhost:3000/business", businessDetaild, {
         headers: {
           'Content-Type': 'application/json',

@@ -1,8 +1,10 @@
-import React, { useState, useEffect, ChangeEvent } from 'react';
-import { Button, TextField, Typography, IconButton } from '@mui/material';
+import { useState, useEffect, ChangeEvent } from 'react';
+import { TextField, Typography, IconButton } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 import { getBusinessDetaild, editBusinessDetaild } from '../../api/business_details.api';
 import { businessDetails } from '../../interface/businessDetails.interface';
+import SaveIcon from '@mui/icons-material/Save';
+import EditIcon from '@mui/icons-material/Edit';
 
 const BusinessDetails = () => {
     const [businessDetails, setBusinessDetails] = useState<businessDetails | null>(null);
@@ -64,9 +66,15 @@ const BusinessDetails = () => {
                         <>
                             {editedDetails && (
                                 <>
-                                    <IconButton style={{ alignSelf: 'flex-end' }} onClick={handleCancelEdit}>
-                                        <CloseIcon />
-                                    </IconButton>
+                                    <div style={{ display: 'flex', justifyContent: 'flex-end', right: 0, marginTop: '-5px' }}>
+                                        <IconButton onClick={handleSave}>
+                                            <SaveIcon />
+                                        </IconButton>
+                                        <IconButton onClick={handleCancelEdit}>
+                                            <CloseIcon />
+                                        </IconButton>
+                                    </div>
+                                    <br />
                                     <Typography variant="h4">Edit business Details</Typography>
                                     <br />
                                     <TextField
@@ -90,7 +98,6 @@ const BusinessDetails = () => {
                                         onChange={handleChange}
                                     />
                                     <br />
-                                    <Button onClick={handleSave}>Save</Button>
                                 </>
                             )}
                         </>
@@ -103,7 +110,11 @@ const BusinessDetails = () => {
                                     <Typography variant="h6">Name: {businessDetails.name}</Typography>
                                     <Typography variant="h6">Address: {businessDetails.adress}</Typography>
                                     <Typography variant="h6">Phone: {businessDetails.phone}</Typography>
-                                    <Button onClick={handleEdit}>Edit</Button>
+                                    <div style={{ display: 'flex', marginTop: '10px' }}>
+                                        <IconButton onClick={handleEdit} style={{ marginRight: '10px' }}>
+                                            <EditIcon />
+                                        </IconButton>
+                                    </div>
                                 </>
                             )}
                         </>

@@ -1,6 +1,5 @@
 import axios from 'axios';
 import { PotographyPackage } from '../interface/PotographyPackage.interface';
-const token = sessionStorage.getItem("token");
 
 export const getAllPotograpyName = async () => {
     try {
@@ -14,6 +13,7 @@ export const getAllPotograpyName = async () => {
 
 export const editPotographyPackage = async (PotographyPackage: PotographyPackage) => {
     try {
+        const token = sessionStorage.getItem("token");
         const response = await axios.put(`http://localhost:3000/PhotographyPackage/${PotographyPackage.id}`, PotographyPackage, {
           headers: {
             'Content-Type': 'application/json',
@@ -29,6 +29,7 @@ export const editPotographyPackage = async (PotographyPackage: PotographyPackage
 
 export const deletePotographyPackage = async (PotographyPackageId: Number) => {
     try {
+        const token = sessionStorage.getItem("token");
         const response = await axios.delete(`http://localhost:3000/PhotographyPackage/${PotographyPackageId}`, {
             headers: {
                 'Content-Type': 'application/json',
@@ -44,6 +45,7 @@ export const deletePotographyPackage = async (PotographyPackageId: Number) => {
 
 export const addPotographyPackage = async (PotographyPackage: PotographyPackage) => {
     try {
+        const token = sessionStorage.getItem("token");
         const response = await axios.post(`http://localhost:3000/PhotographyPackage`, PotographyPackage, {
             headers: {
                 'Content-Type': 'application/json',
