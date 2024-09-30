@@ -1,6 +1,6 @@
 import { Response, Request } from 'express';
 import bodyParser from 'body-parser';
-import { uploadFile , getUploadFile} from '../Services/upload.service';
+import { uploadFile , getUploadFile , getUploadFileOne} from '../Services/upload.service';
 import express from 'express';
 import logger from '../logger'; // Import the logger
 
@@ -16,9 +16,12 @@ export const post = async (req: Request, res: Response) => {
 };
 
 export const get = async (req: Request, res: Response) => {
-    console.log("222");
     logger.info(`GET request received at ${req.path}`);
     await getUploadFile(req, res);
 };
 
+export const getOne = async (req: Request, res: Response) => {
+    logger.info(`GET request received at ${req.path}`);
+    await getUploadFileOne(req, res);
+};
 
