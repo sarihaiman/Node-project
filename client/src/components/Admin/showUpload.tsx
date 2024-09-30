@@ -1,6 +1,25 @@
 import { useEffect, useState } from 'react';
 import axios from 'axios';
-import { Typography } from '@mui/material';
+import { Typography, List, ListItem, ListItemText, ListItemIcon } from '@mui/material';
+import GetAppIcon from '@mui/icons-material/GetApp';
+
+const downloadFile = async (fileUrl: string) => {
+  try {
+    const response = await axios.get(fileUrl, { responseType: 'blob' });
+    const url = window.URL.createObjectURL(new Blob([response.data]));
+    const link = document.createElement('a');
+    link.href = url;
+    link.setAttribute('download', fileUrl.substring(fileUrl.lastIndexOf('/') + 1));
+    document.body.appendChild(link);
+    link.click();
+
+    if (link.parentNode !== null) {
+      link.parentNode.removeChild(link);
+    }
+  } catch (error) {
+    console.error('Error downloading file', error);
+  }
+};
 
 export default function DocumentUploadComponent() {
   const [filenames, setFilenames] = useState([]);
@@ -18,13 +37,21 @@ export default function DocumentUploadComponent() {
   }, []);
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', width: '400px', padding: '20px', border: '2px solid #ccc', borderRadius: '10px', margin: 'auto', marginTop: '11vh', marginBottom: '11vh' }}>
-      <Typography variant="h6">File Names:</Typography>
-      <ul>
+    <div>
+      <Typography style={{ textAlign: 'center' }} variant="h4">File Names:</Typography>
+      <List style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center' }}>
         {filenames.map((fileName, index) => (
-          <li key={index}>{fileName}</li>
+          <div key={index} style={{ width: '300px', height: '70px', margin: '10px', padding: '10px', border: '1px solid #ccc', borderRadius: '10px', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+            <ListItem key={index} button onClick={() => downloadFile(`http://localhost:3000/uploadOne/${fileName}`)}>
+              <ListItemIcon>
+                <GetAppIcon />
+              </ListItemIcon>
+              <ListItemText primary={fileName} />
+            </ListItem>
+          </div>
         ))}
-      </ul>
+      </List>
     </div>
   );
-};
+}
+
