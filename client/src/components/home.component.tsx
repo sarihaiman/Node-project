@@ -1,50 +1,56 @@
 import React, { useState, useEffect } from 'react';
-import a from '../assets/logo.jpg';
-import b from '../assets/logo.jpg';
-import c from '../assets/logo.jpg';
-import d from '../assets/logo.jpg';
+import axios from 'axios';
 
 const Home = () => {
-    const imagePaths = [a, b, c, d];
     const [currentImageIndex, setCurrentImageIndex] = useState(0);
+    const [images, setImages] = useState([]);
 
     useEffect(() => {
+        const fetchImages = async () => {
+            try {
+                const response = await axios.get('http://localhost:3000/image');
+                setImages(response.data);
+            } catch (error) {
+                console.error('Error fetching images:', error);
+            }
+        };
+        fetchImages();
         const interval = setInterval(() => {
-            setCurrentImageIndex((prevIndex) => (prevIndex + 1) % imagePaths.length);
+            setCurrentImageIndex((prevIndex) => (prevIndex + 1) % images.length);
         }, 5000);
 
         return () => clearInterval(interval);
-    }, [imagePaths.length]);
+    }, [images.length]);
 
     const handleDotClick = (index: React.SetStateAction<number>) => {
         setCurrentImageIndex(index);
     };
 
     const renderDots = () => {
-        return imagePaths.map((_, index) => (
+        return images.map((_, index) => (
             <span
                 key={index}
                 style={{
-                    width: '20px', // Fixed width for the circular dot
-                    height: '20px', // Fixed height for the circular dot
+                    width: '20px', 
+                    height: '20px', 
                     cursor: 'pointer',
-                    color: 'black', // Set color to black for all dots
-                    backgroundColor: index === currentImageIndex ? 'black' : 'transparent', // Fill dot with black if active
-                    border: '2px solid black', // Add black border
-                    borderRadius: '50%', // Make the dots circular
-                    display: 'inline-block', // Display dots in a row
-                    margin: '0 10px', // Equal spacing to the right and left
+                    color: 'black', 
+                    backgroundColor: index === currentImageIndex ? 'black' : 'transparent',
+                    border: '2px solid black', 
+                    borderRadius: '50%', 
+                    display: 'inline-block', 
+                    margin: '0 10px',
                 }}
-                onClick={() => handleDotClick(index)} // Handle click event to update current image index
+                onClick={() => handleDotClick(index)} 
             />
         ));
     };
 
     return (
         <div style={{ position: 'relative', textAlign: 'center' }}>
-            {imagePaths.map((imagePath, index) => (
+            {images.map((image: any, index) => (
                 <div key={index} style={{ display: index === currentImageIndex ? 'block' : 'none', position: 'relative' }}>
-                    <img src={imagePath} alt={`Image ${index + 1}`} style={{ width: '100%' }} />
+                    <img src={`http://localhost:3000/image/${image._id}`} alt={`Image ${index + 1}`} style={{ width: '100%' }} />
                 </div>
             ))}
             <div style={{ position: 'absolute', bottom: '40px', width: '100%', display: 'flex', justifyContent: 'center' }}>{renderDots()}</div>
@@ -53,4 +59,3 @@ const Home = () => {
 };
 
 export default Home;
-
