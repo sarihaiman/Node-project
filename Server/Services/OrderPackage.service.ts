@@ -15,6 +15,11 @@ export const addOrderPackage = async function (req: Request, res: Response) {
     try {
         const OrderPackage = JSON.parse(JSON.stringify(req.body));
         const countOrderPackage = await OrderPackage_Model.find();
+        const id = req.params.id;
+        if (await OrderPackage_Model.findOne({ id }) === null) {
+            res.status(404).send('order package not found')
+            return;
+        }
         const newOrderPackage = {
             "id": Number(OrderPackage.id),
             "userid": Number(OrderPackage.userid),
@@ -24,7 +29,7 @@ export const addOrderPackage = async function (req: Request, res: Response) {
             "packageId": Number(OrderPackage.packageId),
         }
         await isCorrect(newOrderPackage)
-        try{
+        try {
             await isAvailableTime(newOrderPackage);
         } catch (err) {
             res.status(400).send("" + err);
@@ -54,9 +59,9 @@ export const updateOrderPackage = async function (req: Request, res: Response) {
             "beginingHour": Array(data.beginingHour),
             "endHour": Array(data.endHour),
             "packageId": Number(data.packageId)
-        }  
+        }
         await isCorrect(newOrderPackage)
-        try{
+        try {
             await isAvailableTime(newOrderPackage);
         } catch (err) {
             res.status(400).send("" + err);
@@ -115,7 +120,16 @@ const isCorrect = async (newOrderPackage: any) => {
 }
 
 const isAvailableTime = async (newOrderPackage: any) => {
-const equalsdate = await OrderPackage_Model.find({ "date": newOrderPackage.date })
+    const equalsdate2 = await OrderPackage_Model.find({ "date": newOrderPackage.date })
+    console.log(equalsdate2);
+    
+    const equalsdate = await OrderPackage_Model.find({
+        $and: [
+            { "date": newOrderPackage.date },
+            { "id": { $ne: newOrderPackage.id } }
+        ]
+    });
+    console.log(equalsdate);  
     equalsdate.sort(function (a: any, b: any) { return a.beginingHour < b.beginingHour ? -1 : 1 });
     equalsdate.forEach((e: any) => {
         if (e['endHour'] > newOrderPackage.beginingHour) {
@@ -124,5 +138,4 @@ const equalsdate = await OrderPackage_Model.find({ "date": newOrderPackage.date 
             }
         }
     })
-  }
-    
+}

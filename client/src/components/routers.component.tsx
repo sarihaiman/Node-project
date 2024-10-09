@@ -14,6 +14,7 @@ import PotographyPackage from '../components/Admin/potographyPackage.component.t
 import BusinessDetails from '../components/Admin/businessDetails.component.tsx';
 import UploadShowComponent from '../components/Admin/showUpload.tsx';
 import FeedbackComponent from './Admin/feedbackDiagrama.component.tsx';
+import ImageComponent from './Admin/image.component.tsx';
 
 const PublicRoutes = () => {
     const isAdmin: boolean = useSelector((state: any) => {
@@ -37,6 +38,7 @@ const PublicRoutes = () => {
             {isAdmin && <Route path="/admin/businessDetails" element={<BusinessDetails />} />}
             {isAdmin && <Route path="/admin/upload" element={<UploadShowComponent />} />}
             {isAdmin && <Route path="/admin/feedback" element={<FeedbackComponent />} />}
+            {isAdmin && <Route path="/admin/image" element={<ImageComponent />} />}
         </Routes>
     );
 };

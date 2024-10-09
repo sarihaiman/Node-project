@@ -1,6 +1,6 @@
 import { Response, Request } from 'express';
 import bodyParser from 'body-parser';
-import { postimages , getimages, getByIdimages} from '../Services/Image.servise';
+import { postimages , getimages, getByIdimages , deleteimages} from '../Services/Image.servise';
 import express from 'express';
 import logger from '../logger';
 
@@ -22,4 +22,9 @@ export const get = async (req: any, res: Response) => {
 export const getById = async (req: any, res: Response) => {
     logger.info(`GETById request received at ${req.path}`);
     await getByIdimages(req, res);
+};
+
+export const deleteimage = async (req: any, res: Response) => {
+    logger.info(`DELETE request received at ${req.path}`);
+    await deleteimages(req, res);
 };
