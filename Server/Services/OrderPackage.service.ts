@@ -54,9 +54,7 @@ export const updateOrderPackage = async function (req: Request, res: Response) {
             "beginingHour": Array(data.beginingHour),
             "endHour": Array(data.endHour),
             "packageId": Number(data.packageId)
-        }
-        console.log(data);
-        console.log(newOrderPackage);   
+        }  
         await isCorrect(newOrderPackage)
         try{
             await isAvailableTime(newOrderPackage);
@@ -67,11 +65,11 @@ export const updateOrderPackage = async function (req: Request, res: Response) {
             id: id
         }, {
             $set: {
-                userid: Number(data.id),
-                date: Number(data.date),
-                beginingHour: Number(data.beginingHour),
-                endHour: Number(data.endHour),
-                packageId: Number(data.packageId)
+                userid: data.userid,
+                date: data.date,
+                beginingHour: data.beginingHour,
+                endHour: data.endHour,
+                packageId: data.packageId
             }
         })
         res.send("Update " + id + " secceeded")

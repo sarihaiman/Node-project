@@ -19,6 +19,7 @@ import OrderPackage_Router from './Routers/OrderPackage.Router';
 import cors from 'cors';
 import upload_router from './Routers/upload.router';
 import feedback from './Routers/Feedback.Router';
+import image from './Routers/Image.router';
 
 app.use(cors());
 app.use(user_router)
@@ -27,6 +28,7 @@ app.use(OrderPackage_Router)
 app.use(business_router)
 app.use(upload_router);
 app.use(feedback);
+app.use(image);
 
 
 
