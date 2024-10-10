@@ -67,6 +67,7 @@ export default function TopNav() {
           <MenuItem component={Link} to="/admin/customers" onClick={handleCloseMenu}>customers</MenuItem>
           <MenuItem component={Link} to="/admin/upload" onClick={handleCloseMenu}>uploads</MenuItem>
           <MenuItem component={Link} to="/admin/feedback" onClick={handleCloseMenu}>feedback</MenuItem>
+          <MenuItem component={Link} to="/admin/image" onClick={handleCloseMenu}>image</MenuItem>
         </Paper>
       </Popover>
     </Box>

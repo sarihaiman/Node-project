@@ -19,6 +19,7 @@ import OrderPackage_Router from './Routers/OrderPackage.Router';
 import cors from 'cors';
 import upload_router from './Routers/upload.router';
 import feedback from './Routers/Feedback.Router';
+import image from './Routers/Image.router';
 
 app.use(cors());
 app.use(user_router)
@@ -27,66 +28,7 @@ app.use(OrderPackage_Router)
 app.use(business_router)
 app.use(upload_router);
 app.use(feedback);
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-const mailgun = require('mailgun-js')({
-  apiKey: 'c82a25f27f747c18a4333aeeb7a2e92f-2b755df8-0e5648b1',
-  domain: 'sandbox13391acc10be4865ad8a5b240fc50aeb.mailgun.org'
-});
-
-const sendEmail = (to: string, subject: string, text: string) => {
-  const data = {
-      from: 's97414h@gmail.com',
-      to,
-      subject,
-      text
-  };
-
-  mailgun.messages().send(data, (error: any, body: any) => {
-      if (error) {
-          console.error(error);
-      } else {
-          console.log(body);
-      }
-  });
-};
-
-// שימוש
-// sendEmail('s97414h@gmail.com', 'Test Email', 'זהו מייל ניסיון מ-Mailgun');
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+app.use(image);
 
 const options: swaggerJsdoc.Options = {
     definition: {

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { getimage } from '../api/image.api';
 
 const Home = () => {
     const [currentImageIndex, setCurrentImageIndex] = useState(0);
@@ -8,7 +9,7 @@ const Home = () => {
     useEffect(() => {
         const fetchImages = async () => {
             try {
-                const response = await axios.get('http://localhost:3000/image');
+                const response = await getimage();
                 setImages(response.data);
             } catch (error) {
                 console.error('Error fetching images:', error);

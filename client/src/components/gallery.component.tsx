@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Grid, Typography } from '@mui/material';
 import { styled, useTheme } from '@mui/system';
 import axios from 'axios';
+import { getimage } from '../api/image.api';
 
 const GalleryImage = styled('img')({
     width: '100%',
@@ -16,7 +17,7 @@ const GalleryComponent: React.FC = () => {
     useEffect(() => {
         const fetchImages = async () => {
             try {
-                const response = await axios.get('http://localhost:3000/image');
+                const response = await getimage();
                 setImages(response.data);
             } catch (error) {
                 console.error('Error fetching images:', error);

@@ -48,3 +48,12 @@ export const getByIdimages = async (req: any, res: Response) => {
     }
 };
 
+export const deleteimages = async (req: any, res: Response) => {
+    try {
+        await Image.deleteOne({ _id: req.params.id })  
+    } catch (error) {
+        console.error('Error fetching image:', error);
+        res.status(500).send('Error fetching image');
+    }
+};
+
