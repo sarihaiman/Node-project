@@ -77,3 +77,17 @@ export const editUser = async (user: any) => {
     throw error;
   }
 }
+
+export const editUserForgetPassword = async (user: any) => {
+  try {
+    const response = await axios.put(`http://localhost:3000/User/forgetPassword/${user.id}`, user, {
+      headers: {
+        'Content-Type': 'application/json',
+      }
+    });
+    return response.data;
+  } catch (error) {
+    console.error('error in api request of users', error);
+    throw error;
+  }
+}
