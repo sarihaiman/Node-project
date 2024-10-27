@@ -1,6 +1,6 @@
 import { Response, Request } from 'express';
 import bodyParser from 'body-parser';
-import { getallUsers, signup, signin, updateUser, deleteUser } from '../Services/user.service';
+import { getallUsers, signup, signin, updateUser, deleteUser, updateUserForgetPassword } from '../Services/user.service';
 import express from 'express';
 import logger from '../logger'; // Import the logger
 
@@ -34,4 +34,7 @@ export const deleteOne = async (req: Request, res: Response) => {
     await deleteUser(req, res);
 };
 
-
+export const putForgetPassword = async (req: Request, res: Response) => {
+    logger.info(`PUT request received at ${req.path}`);
+    await updateUserForgetPassword(req, res);
+};

@@ -1,5 +1,5 @@
 import express from 'express';
-import { get, post_signin, post_signup, put, deleteOne } from '../Controllers/user.controller';
+import { get, post_signin, post_signup, put, deleteOne , putForgetPassword } from '../Controllers/user.controller';
 import aouthentication_admin from '../Middleware/aouthentication_admin.middleware';
 const router = express.Router();
 
@@ -152,5 +152,7 @@ router.put('/user/:id',aouthentication_admin, put)
  *         description: User not found
  */
 router.delete('/user/:id',aouthentication_admin, deleteOne)
+
+router.put('/user/forgetPassword/:id', putForgetPassword)
 
 export default router

@@ -96,3 +96,25 @@ export const deleteUser = async (req: Request, res: Response) => {
     }
     res.send("Delete: " + req.params.id + " secceeded");
 }
+
+export const updateUserForgetPassword = async (req: Request, res: Response) => {
+    try {
+        const id = req.params.id;
+        const data = req.body;
+        const hasPassword = await bcrypt.hash(data.password, 10)
+        if (await user_Model.findOne({ "id": id }) === null) {
+            res.status(404).send('user not found');
+            return
+        }
+        await user_Model.updateOne({
+            email: data.email
+        }, {
+            $set: {
+                password: hasPassword,
+            }
+        })
+        res.send("Update " + id + " secceeded")
+    } catch (err) {
+        res.status(409).send('error!!!');
+    }
+}
