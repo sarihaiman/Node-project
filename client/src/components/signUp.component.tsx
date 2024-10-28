@@ -78,6 +78,7 @@ export default function SignUpForm() {
             dispatch(FillDataCurrentUser(user));
             sessionStorage.setItem("currentUser", JSON.stringify(user));
             sessionStorage.setItem("token", response.data);
+            window.location.href = 'http://localhost:5173/home'; 
             console.log('SignUp successful:', response.data);
         } catch (error) {
             console.error('Error signing up:', error);

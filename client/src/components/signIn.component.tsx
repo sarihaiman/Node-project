@@ -115,9 +115,9 @@ export default function SigninForm() {
                 name: userDecode.name,
                 isAdmin: userDecode.isAdmin
             };
-            alert('hello: ' + userDecode.name);
             dispatch(FillDataCurrentUser(user));
             sessionStorage.setItem("currentUser", JSON.stringify(user));
+            window.location.href = 'http://localhost:5173/home'; 
             console.log('SigninForm successful:', response);
         } catch (error) {
             console.error('Error logging in:', error);

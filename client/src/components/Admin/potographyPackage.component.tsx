@@ -1,10 +1,6 @@
 import { useState, useEffect, ChangeEvent } from 'react';
 import { Button, TextField, Typography, IconButton, Dialog, DialogTitle, DialogContent } from '@mui/material';
-import CloseIcon from '@mui/icons-material/Close';
-import EditIcon from '@mui/icons-material/Edit';
-import DeleteIcon from '@mui/icons-material/Delete';
-import SaveIcon from '@mui/icons-material/Save';
-import AddIcon from '@mui/icons-material/Add';
+import {Close,Edit ,Delete,Save, Add}  from '@mui/icons-material';
 import { getAllPotograpyName, editPotographyPackage, deletePotographyPackage, addPotographyPackage } from '../../api/PotographyPackage.api';
 import { PotographyPackage } from '../../interface/PotographyPackage.interface';
 
@@ -91,12 +87,12 @@ const PotographyPackageAll = () => {
 
     return (
         <div>
-            <Button onClick={() => setIsDialogOpen(true)} startIcon={<AddIcon />} style={{ marginBottom: '10px', marginTop: '10px', marginLeft: '40px' }}>Add New Package</Button>
+            <Button onClick={() => setIsDialogOpen(true)} startIcon={<Add />} style={{ marginBottom: '10px', marginTop: '10px', marginLeft: '40px' }}>Add New Package</Button>
             <Dialog open={isDialogOpen} onClose={() => setIsDialogOpen(false)}>
                 <DialogTitle style={{marginTop: '20px'}}>
                     Add New Photography Package
                     <IconButton style={{ position: 'absolute', right: 0, top: 0 }} onClick={() => setIsDialogOpen(false)}>
-                        <CloseIcon />
+                        <Close />
                     </IconButton>
                 </DialogTitle>
                 <DialogContent style={{ width: '400px', display: 'flex', flexDirection: 'column', alignItems: 'center' , marginTop:'-20px'}}>
@@ -127,10 +123,10 @@ const PotographyPackageAll = () => {
                                 <>
                                     <div style={{ display: 'flex', justifyContent: 'flex-end', right: 0, marginTop: '-5px' }}>
                                         <IconButton onClick={() => handleSave(photographyPackage)}>
-                                            <SaveIcon />
+                                            <Save />
                                         </IconButton>
                                         <IconButton onClick={() => setEditingIndex(null)}>
-                                            <CloseIcon />
+                                            <Close />
                                         </IconButton>
                                     </div>
                                     <br />
@@ -158,10 +154,10 @@ const PotographyPackageAll = () => {
                                     <Typography variant="h6">Money To Hour: {photographyPackage.moneyToHour ? photographyPackage.moneyToHour.toString() : 'N/A'}</Typography>
                                     <div style={{ display: 'flex', marginTop: '10px' }}>
                                         <IconButton onClick={() => handleEdit(index)} style={{ marginRight: '10px' }}>
-                                            <EditIcon />
+                                            <Edit />
                                         </IconButton>
                                         <IconButton onClick={() => handleDelete(index)}>
-                                            <DeleteIcon />
+                                            <Delete />
                                         </IconButton>
                                     </div>
                                 </>

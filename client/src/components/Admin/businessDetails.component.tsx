@@ -1,10 +1,8 @@
 import { useState, useEffect, ChangeEvent } from 'react';
 import { TextField, Typography, IconButton } from '@mui/material';
-import CloseIcon from '@mui/icons-material/Close';
+import { Close, Save , Edit} from '@mui/icons-material';
 import { getBusinessDetaild, editBusinessDetaild } from '../../api/business_details.api';
 import { businessDetails } from '../../interface/businessDetails.interface';
-import SaveIcon from '@mui/icons-material/Save';
-import EditIcon from '@mui/icons-material/Edit';
 
 const BusinessDetails = () => {
     const [businessDetails, setBusinessDetails] = useState<businessDetails | null>(null);
@@ -68,10 +66,10 @@ const BusinessDetails = () => {
                                 <>
                                     <div style={{ display: 'flex', justifyContent: 'flex-end', right: 0, marginTop: '-5px' }}>
                                         <IconButton onClick={handleSave}>
-                                            <SaveIcon />
+                                            <Save />
                                         </IconButton>
                                         <IconButton onClick={handleCancelEdit}>
-                                            <CloseIcon />
+                                            <Close />
                                         </IconButton>
                                     </div>
                                     <br />
@@ -112,7 +110,7 @@ const BusinessDetails = () => {
                                     <Typography variant="h6">Phone: {businessDetails.phone}</Typography>
                                     <div style={{ display: 'flex', marginTop: '10px' }}>
                                         <IconButton onClick={handleEdit} style={{ marginRight: '10px' }}>
-                                            <EditIcon />
+                                            <Edit />
                                         </IconButton>
                                     </div>
                                 </>

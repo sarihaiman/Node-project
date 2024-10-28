@@ -57,62 +57,64 @@ export default function CustomizedDialogs() {
     };
 
     return (
-        <React.Fragment>
-            <Button
-                variant="outlined"
-                onClick={handleClickOpen}
-                sx={{
-                    color: 'black',
-                    position: 'fixed',
-                    left: -32,
-                    top: '80%',
-                    transform: 'rotate(90deg)',
-                    backgroundColor: 'rgb(111, 233, 224)',
-                    '&:hover': {
+        <div style={{ position: 'absolute', top: 0, left: 0, zIndex: 9999 }} >
+            <React.Fragment>
+                <Button
+                    variant="outlined"
+                    onClick={handleClickOpen}
+                    sx={{
+                        color: 'black',
+                        position: 'fixed',
+                        left: -32,
+                        top: '80%',
+                        transform: 'rotate(90deg)',
                         backgroundColor: 'rgb(111, 233, 224)',
-                    }
-                }}
-            >
-                Feedback
-            </Button>
-            <BootstrapDialog
-                onClose={handleClose}
-                aria-labelledby="customized-dialog-title"
-                open={open}
-            >
-                <DialogTitle sx={{ m: 0, p: 2, color: 'rgb(111, 233, 224)' }} id="customized-dialog-title">
-                    Feedback
-                </DialogTitle>
-                <IconButton
-                    aria-label="close"
-                    onClick={handleClose}
-                    sx={(theme) => ({
-                        position: 'absolute',
-                        right: 8,
-                        top: 8,
-                        color: theme.palette.grey[500],
-                    })}
+                        '&:hover': {
+                            backgroundColor: 'rgb(111, 233, 224)',
+                        }
+                    }}
                 >
-                    <CloseIcon />
-                </IconButton>
-                <DialogContent dividers>
-                    <Typography gutterBottom>
-                        How do you feel about your visit today?
-                    </Typography>
-                    <RadioGroup aria-label="feedback" name="feedback" value={feedback} onChange={handleFeedbackChange} >
-                        <FormControlLabel value="Excellent" control={<Radio style={{ color: 'black', }} />} label="Excellent" />
-                        <FormControlLabel value="Good" control={<Radio style={{ color: 'black', }} />} label="Good" />
-                        <FormControlLabel value="Fair" control={<Radio style={{ color: 'black', }} />} label="Fair" />
-                        <FormControlLabel value="Poor" control={<Radio style={{ color: 'black', }} />} label="Poor" />
-                        <FormControlLabel value="Very Poor" control={<Radio style={{ color: 'black', }} />} label="Very Poor" />
-                    </RadioGroup>
-                </DialogContent>
-                <DialogActions>
-                    <Button autoFocus onClick={sendFeedback}>
-                        Send
-                    </Button>
-                </DialogActions>
-            </BootstrapDialog>
-        </React.Fragment>
+                    Feedback
+                </Button>
+                <BootstrapDialog
+                    onClose={handleClose}
+                    aria-labelledby="customized-dialog-title"
+                    open={open}
+                >
+                    <DialogTitle sx={{ m: 0, p: 2, color: 'rgb(111, 233, 224)' }} id="customized-dialog-title">
+                        Feedback
+                    </DialogTitle>
+                    <IconButton
+                        aria-label="close"
+                        onClick={handleClose}
+                        sx={(theme) => ({
+                            position: 'absolute',
+                            right: 8,
+                            top: 8,
+                            color: theme.palette.grey[500],
+                        })}
+                    >
+                        <CloseIcon />
+                    </IconButton>
+                    <DialogContent dividers>
+                        <Typography gutterBottom>
+                            How do you feel about your visit today?
+                        </Typography>
+                        <RadioGroup aria-label="feedback" name="feedback" value={feedback} onChange={handleFeedbackChange} >
+                            <FormControlLabel value="Excellent" control={<Radio style={{ color: 'black', }} />} label="Excellent" />
+                            <FormControlLabel value="Good" control={<Radio style={{ color: 'black', }} />} label="Good" />
+                            <FormControlLabel value="Fair" control={<Radio style={{ color: 'black', }} />} label="Fair" />
+                            <FormControlLabel value="Poor" control={<Radio style={{ color: 'black', }} />} label="Poor" />
+                            <FormControlLabel value="Very Poor" control={<Radio style={{ color: 'black', }} />} label="Very Poor" />
+                        </RadioGroup>
+                    </DialogContent>
+                    <DialogActions>
+                        <Button autoFocus onClick={sendFeedback}>
+                            Send
+                        </Button>
+                    </DialogActions>
+                </BootstrapDialog>
+            </React.Fragment>
+        </div>
     );
 }

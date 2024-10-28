@@ -46,7 +46,7 @@ const AddOrderFormComponent = () => {
                 id: 0,
                 userid,
                 packageId: selectedPackage['id'],
-                date,
+                date: date.replace(/-/g, '/'),
                 beginingHour,
                 endHour
             };
