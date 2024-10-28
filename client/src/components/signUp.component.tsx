@@ -5,6 +5,8 @@ import { FillDataCurrentUser } from '../redux/userAction';
 import { useDispatch } from 'react-redux';
 import { User } from '../interface/user.interface';
 import { Link } from 'react-router-dom';
+import { validateName, validatePhone, validatePassword, validateEmail } from '../utils/validation';
+import Swal from 'sweetalert2';
 
 const inputStyle = {
     height: '40px',
@@ -22,45 +24,34 @@ export default function SignUpForm() {
     const [nameError, setNameError] = useState('');
     const [phoneError, setPhoneError] = useState('');
 
-    const validateEmail = (email: string) => {
-        const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-        if (!emailRegex.test(email)) {
-            setEmailError('Email should be in the format "example@example.com"');
-        }
-    };
-
-    const validateName = (name: string) => {
-        const nameRegex = /^[\u0590-\u05FFa-zA-Z]{3,15}$/;
-        if (!nameRegex.test(name)) {
-            setNameError('Name should be between 3 and 15 characters long');
-        }
-    };
-
-    const validatePhone = (phone: string) => {
-        const phoneRegex = /^(?:[0-9] ?){6,14}[0-9]$/;
-        if (!phoneRegex.test(phone)) {
-            setPhoneError('Phone number should be in the format 1234567890');
-        }
-    };
-
-    const validatePassword = (password: string) => {
-        if (!password.match(/[A-Z]/)) {
-            setPasswordError('Password must contain at least one uppercase letter');
-        }
-        if (!password.match(/[0-9]/)) {
-            setPasswordError('Password must contain at least one number');
-        }
-        if (password.length < 8) {
-            setPasswordError('Password must be at least 8 characters long');
-        }
-    };
-
     const handleSignUp = async () => {
-        validateEmail(email);
-        validatePassword(password);
-        validateName(name);
-        validatePhone(phone);
+        setEmailError('');
+        setNameError('');
+        setPasswordError('');
+        setPhoneError('');
+        const nameValidationResult: string = validateName(name);
+        if (nameValidationResult) {
+            setNameError(nameValidationResult);
+            return;
+        }
 
+        const emailValidationResult: string = validateEmail(email);
+        if (emailValidationResult) {
+            setEmailError(emailValidationResult);
+            return;
+        }
+
+        const phoneValidationResult: string = validatePhone(phone);
+        if (phoneValidationResult) {
+            setPhoneError(phoneValidationResult);
+            return;
+        }
+
+        const passwordValidationResult: string = validatePassword(password);
+        if (passwordValidationResult) {
+            setPasswordError(passwordValidationResult);
+            return;
+        }
         try {
             const user: User = {
                 email,
@@ -78,10 +69,21 @@ export default function SignUpForm() {
             dispatch(FillDataCurrentUser(user));
             sessionStorage.setItem("currentUser", JSON.stringify(user));
             sessionStorage.setItem("token", response.data);
-            window.location.href = 'http://localhost:5173/home'; 
+            window.location.href = 'http://localhost:5173/home';
             console.log('SignUp successful:', response.data);
-        } catch (error) {
-            console.error('Error signing up:', error);
+        } catch (error: any) {
+            if (error.response.data == "email exists")
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: 'Email already exists. Please use a different email.',
+                });
+            else
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: 'Error',
+                });
         }
     };
 

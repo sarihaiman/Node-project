@@ -12,6 +12,7 @@ import { useForm } from 'react-hook-form';
 import VisibilityIcon from '@material-ui/icons/Visibility';
 import VisibilityOffIcon from '@material-ui/icons/VisibilityOff';
 import { FormHelperText } from '@material-ui/core';
+import { validatePassword, validateEmail } from '../utils/validation';
 
 export default function SigninForm() {
     const [email, setEmail] = useState('');
@@ -76,28 +77,19 @@ export default function SigninForm() {
         fetchAllCustomers();
     }, []);
 
-    const validateEmail = (email: string) => {
-        const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-        if (!emailRegex.test(email)) {
-            setEmailError('Email should be in the format "example@example.com"');
-        }
-    };
-
-    const validatePassword = (password: string) => {
-        if (!password.match(/[A-Z]/)) {
-            setPasswordError('Password must contain at least one uppercase letter');
-        }
-        if (!password.match(/[0-9]/)) {
-            setPasswordError('Password must contain at least one number');
-        }
-        if (password.length < 8) {
-            setPasswordError('Password must be at least 8 characters long');
-        }
-    };
-
     const handleSigninForm = async () => {
-        validateEmail(email);
-        validatePassword(password);
+        setEmailError('');
+        setPasswordError('');
+        const passwordValidationResult: string = validatePassword(password);
+        const emailValidationResult: string = validateEmail(email);
+        if (emailValidationResult) {
+            setEmailError(emailValidationResult);
+            return;
+        }
+        if (passwordValidationResult) {
+            setPasswordError(passwordValidationResult);
+            return;
+        }
         try {
             const response: string = await SignIn({
                 email: email,
@@ -117,9 +109,14 @@ export default function SigninForm() {
             };
             dispatch(FillDataCurrentUser(user));
             sessionStorage.setItem("currentUser", JSON.stringify(user));
-            window.location.href = 'http://localhost:5173/home'; 
+            window.location.href = 'http://localhost:5173/home';
             console.log('SigninForm successful:', response);
-        } catch (error) {
+        } catch (error: any) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error',
+                        text: error.response.data,
+                    });
             console.error('Error logging in:', error);
         }
     };
@@ -225,7 +222,7 @@ export default function SigninForm() {
                     />
                     <Button variant="contained" onClick={handleSigninForm}>Signin</Button>
                     <div className="disabled">
-                        <Typography variant="h6" className="forgot-password" onClick={resetPassword} style={{ cursor: 'pointer', marginTop: '25px' }}>Forgot Password?</Typography>
+                        {/* <Typography variant="h6" className="forgot-password" onClick={resetPassword} style={{ cursor: 'pointer', marginTop: '25px' }}>Forgot Password?</Typography> */}
                         <Dialog open={showModal} onClose={closeModal}>
                             <DialogTitle variant="h4">Reset Password Modal</DialogTitle>
                             <DialogContent>

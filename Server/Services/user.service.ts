@@ -27,7 +27,12 @@ export const signin = async (req: Request, res: Response) => {
             )
             res.status(200).json(token)
         } else {
-            res.status(409).send("Illegal...")
+            if(!user){
+                res.status(409).send("email not found");
+            }
+            else{
+                res.status(409).send("incorrect password");
+            }
         }
     } catch (err) {
         console.log(err)
