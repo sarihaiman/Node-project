@@ -6,6 +6,8 @@ import { addOrderPackage } from '../api/order.api';
 import { getAllPotograpyName } from '../api/PotographyPackage.api';
 import isTokenValid from '../utils/checkToken';
 import { useSelector } from 'react-redux';
+import { isTimeValid, isDateValid, isFormValid } from '../utils/validation'
+import Swal from 'sweetalert2';
 
 const AddOrderFormComponent = () => {
     const [packageName, setPackageName] = useState('');
@@ -37,6 +39,9 @@ const AddOrderFormComponent = () => {
 
     const handleAddOrder = async () => {
         if (!isTokenValid()) { return; }
+        if (!isFormValid(packageName, new Date(date), beginingHour, endHour) || !isTimeValid(beginingHour, endHour) || !isDateValid(new Date(date))) {
+            return;
+        }
         try {
             const selectedPackage = packages.find((pkg: any) => pkg.type === packageName);
             if (!selectedPackage) {
@@ -53,13 +58,21 @@ const AddOrderFormComponent = () => {
             console.log(order);
             const response = await addOrderPackage(order);
             console.log(response);
-            console.log('Order added successfully:', order);
+            Swal.fire({
+                icon: 'success',
+                title: 'Success',
+                text: 'Your order has been successfully added.',
+            });
             setPackageName('');
             setDate('');
             setBeginingHour('');
             setEndHour('');
-        } catch (error) {
-            console.log('Error adding order:', error);
+        } catch (error: any) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: error.response.data,
+            });
         }
     };
 

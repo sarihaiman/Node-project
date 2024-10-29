@@ -15,11 +15,6 @@ export const addOrderPackage = async function (req: Request, res: Response) {
     try {
         const OrderPackage = JSON.parse(JSON.stringify(req.body));
         const countOrderPackage = await OrderPackage_Model.find();
-        const id = req.params.id;
-        if (await OrderPackage_Model.findOne({ id }) === null) {
-            res.status(404).send('order package not found')
-            return;
-        }
         const newOrderPackage = {
             "id": Number(OrderPackage.id),
             "userid": Number(OrderPackage.userid),
@@ -33,6 +28,7 @@ export const addOrderPackage = async function (req: Request, res: Response) {
             await isAvailableTime(newOrderPackage);
         } catch (err) {
             res.status(400).send("" + err);
+            return;
         }
         const length = countOrderPackage.length
         if (length === 0)
@@ -65,6 +61,7 @@ export const updateOrderPackage = async function (req: Request, res: Response) {
             await isAvailableTime(newOrderPackage);
         } catch (err) {
             res.status(400).send("" + err);
+            return;
         }
         await OrderPackage_Model.updateOne({
             id: id
