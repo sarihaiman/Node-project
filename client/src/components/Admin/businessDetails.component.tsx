@@ -1,8 +1,10 @@
 import { useState, useEffect, ChangeEvent } from 'react';
 import { TextField, Typography, IconButton } from '@mui/material';
-import { Close, Save , Edit} from '@mui/icons-material';
+import { Close, Save, Edit } from '@mui/icons-material';
 import { getBusinessDetaild, editBusinessDetaild } from '../../api/business_details.api';
 import { businessDetails } from '../../interface/businessDetails.interface';
+import Swal from 'sweetalert2';
+import { validateName, validatePhone, validateAddress } from '../../utils/validation'
 
 const BusinessDetails = () => {
     const [businessDetails, setBusinessDetails] = useState<businessDetails | null>(null);
@@ -21,7 +23,6 @@ const BusinessDetails = () => {
                 setIsLoading(false);
             }
         };
-
         fetchBusinessDetails();
     }, []);
 
@@ -31,14 +32,46 @@ const BusinessDetails = () => {
     };
 
     const handleSave = async () => {
+        const errorName = validateName(editedDetails!.name);
+        if (errorName) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: 'Please enter a valid Business Name.',
+            });
+            return;
+        }
+        const errorAddress = validateAddress(editedDetails!.adress);
+        if (errorAddress) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: 'Please enter a valid Business Address.',
+            });
+            return
+        }
+        const errorPhone = validatePhone(editedDetails!.phone);
+        if (errorPhone) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: 'Please enter a valid Business Phone.',
+            });
+            return
+        }
         try {
             if (editedDetails) {
                 await editBusinessDetaild(editedDetails);
                 setBusinessDetails(editedDetails);
                 setIsEditing(false);
             }
-        } catch (error) {
-            console.error('Error updating business details:', error);
+        } catch (error: any) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: error.response.data,
+            });
+            console.error('Error logging in:', error);
         }
     };
 
@@ -101,7 +134,7 @@ const BusinessDetails = () => {
                         </>
                     ) : (
                         <>
-                        <br />
+                            <br />
                             <Typography variant="h4">Business Details</Typography>
                             {businessDetails && (
                                 <>

@@ -1,4 +1,4 @@
-import { SetStateAction, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { TextField, Button, Typography, Dialog, DialogTitle, DialogContent, DialogActions } from '@mui/material';
 import { Link } from 'react-router-dom';
 import { FillDataCurrentUser } from '../redux/userAction';
@@ -24,7 +24,7 @@ export default function SigninForm() {
     const [AllCustomers, setAllCustomers] = useState<User[]>([]);
     const [showA, setShowA] = useState(false);
     const [codeThatTheClientWrite, setCodeThatTheClientWrite] = useState('');
-    const { register, handleSubmit, watch, formState: { errors } } = useForm();
+    const { handleSubmit, watch, formState: { errors } } = useForm();
     const [showPassword, setShowPassword] = useState(true);
     const [showAuthPassword, setShowAuthPassword] = useState(true);
     const [openDialog, setOpenDialog] = useState(false);
@@ -222,7 +222,7 @@ export default function SigninForm() {
                     />
                     <Button variant="contained" onClick={handleSigninForm}>Signin</Button>
                     <div className="disabled">
-                        {/* <Typography variant="h6" className="forgot-password" onClick={resetPassword} style={{ cursor: 'pointer', marginTop: '25px' }}>Forgot Password?</Typography> */}
+                        <Typography variant="h6" className="forgot-password" onClick={resetPassword} style={{ cursor: 'pointer', marginTop: '25px' }}>Forgot Password?</Typography>
                         <Dialog open={showModal} onClose={closeModal}>
                             <DialogTitle variant="h4">Reset Password Modal</DialogTitle>
                             <DialogContent>
