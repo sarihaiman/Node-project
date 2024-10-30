@@ -3,13 +3,15 @@ import { Calendar, momentLocalizer } from 'react-big-calendar';
 import moment from 'moment';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
 import { Dialog, DialogTitle, DialogContent, TextField, Typography, IconButton, Button, FormControl, Select, MenuItem, InputLabel } from '@mui/material';
-import { getOrderPackage, deleteOrderPackage ,editOrderPackage,addOrderPackage} from '../../api/order.api';
+import { getOrderPackage, deleteOrderPackage, editOrderPackage, addOrderPackage } from '../../api/order.api';
 import { OrderPackage } from '../../interface/order.interface';
 import { PotographyPackage } from '../../interface/PotographyPackage.interface';
 import { getAllPotograpyName } from '../../api/PotographyPackage.api';
 import { getAllUsers } from '../../api/user.api';
 import { Delete, Edit, Save, Close, Add } from '@mui/icons-material';
 import isTokenValid from '../../utils/checkToken';
+import { isTimeValid, isDateValid, isFormValid } from '../../utils/validation'
+import Swal from 'sweetalert2';
 
 const localizer = momentLocalizer(moment);
 
@@ -99,10 +101,13 @@ const AdminCalendar = () => {
   };
 
   const handleSave = async () => {
+    if (!isTimeValid(editedOrder?.beginingHour, editedOrder?.endHour) || !isDateValid(new Date(editedOrder!.date))) {
+      return;
+    }
     console.log(editedOrder);
     try {
       if (editedOrder) {
-        const response = await editOrderPackage(editedOrder); 
+        const response = await editOrderPackage(editedOrder);
         if (response.status === 200) {
           const updatedEvents = events.map((event) => (event.id === editedOrder.id ? editedOrder : event));
           setEvents(updatedEvents);
@@ -111,15 +116,28 @@ const AdminCalendar = () => {
           console.error('Failed to save the edited order');
         }
       }
-    } catch (error) {
-      console.error('Error saving the edited order:', error);
+    } catch (error: any) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Error',
+        text: error.response.data,
+      });
     }
   };
-  
 
   const handleEdit = () => {
-    setEditingIndex(selectedEvent?.id ?? null);
-    setEditedOrder(selectedEvent);
+    const eventDate = new Date(selectedEvent!.date);
+    const currentDate = new Date();
+    if (eventDate >= currentDate) {
+      setEditingIndex(selectedEvent?.id ?? null);
+      setEditedOrder(selectedEvent);
+    }
+    else
+      Swal.fire({
+        icon: 'error',
+        title: 'Error',
+        text: 'You cannot edit past events.',
+      });
   };
 
   const handleCancelEdit = () => {
@@ -129,6 +147,9 @@ const AdminCalendar = () => {
 
   const handleAddOrder = async () => {
     if (!isTokenValid()) { return; }
+    if (!isFormValid(packageName, new Date(date), beginingHour, endHour) || !isTimeValid(beginingHour, endHour) || !isDateValid(new Date(date))) {
+      return;
+    }
     try {
       const selectedPackage = packages.find((pkg: any) => pkg.type === packageName);
       const selectedUser = nameUser.find((pkg: any) => pkg.name === userName);
@@ -149,6 +170,11 @@ const AdminCalendar = () => {
       console.log(order);
       const response = await addOrderPackage(order);
       console.log(response);
+      Swal.fire({
+        icon: 'success',
+        title: 'Success',
+        text: 'Your order has been successfully added.',
+      });
       console.log('Order added successfully:', order);
       setuserName('');
       setPackageName('');
@@ -157,8 +183,12 @@ const AdminCalendar = () => {
       setEndHour('');
       setIsDialogOpen(false);
       setEvents([...events, order]);
-    } catch (error) {
-      console.log('Error adding order:', error);
+    } catch (error: any) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Error',
+        text: error.response.data,
+      });
     }
   };
 
@@ -192,7 +222,7 @@ const AdminCalendar = () => {
   return (
     <div>
       <Button onClick={() => setIsDialogOpen(true)} startIcon={<Add />} style={{ marginBottom: '10px', marginTop: '10px', marginLeft: '40px' }}>Add New Order</Button>
-      <Dialog open={isDialogOpen} onClose={() => setIsDialogOpen(false)}>
+      <Dialog open={isDialogOpen} onClose={() => setIsDialogOpen(false)} style={{ position: 'absolute', zIndex: 100 }}>
         <DialogTitle style={{ marginTop: '20px' }}>
           Add New Order
           <IconButton style={{ position: 'absolute', right: 0, top: 0 }} onClick={handleCloseDialog}>
@@ -253,18 +283,18 @@ const AdminCalendar = () => {
           <Button onClick={handleAddOrder} variant="contained" color="primary" style={{ marginTop: '20px' }}>Add</Button>
         </DialogContent>
       </Dialog>
-        <Calendar
-          localizer={localizer}
-          events={events.map((order) => ({
-            ...order,
-            title: `${packages.find((pkg: any) => pkg.id === order.packageId)?.type}`,
-          }))}
-          startAccessor={(event) => new Date(event.date)}
-          endAccessor={(event) => new Date(event.date)}
-          style={{ textDecoration: 'none', height: 500, margin: '20px 20px 20px 20px', fontFamily: 'Roboto,Helvetica Neue,Arial,sans-serif' }}          onSelectEvent={handleEventClick}
-          eventPropGetter={eventStyleGetter}
-        />
-      <Dialog open={openDialog} onClose={handleClosePopup}>
+      <Calendar
+        localizer={localizer}
+        events={events.map((order) => ({
+          ...order,
+          title: `${packages.find((pkg: any) => pkg.id === order.packageId)?.type}`,
+        }))}
+        startAccessor={(event) => new Date(event.date)}
+        endAccessor={(event) => new Date(event.date)}
+        style={{ textDecoration: 'none', height: 500, margin: '20px 20px 20px 20px', fontFamily: 'Roboto,Helvetica Neue,Arial,sans-serif' }} onSelectEvent={handleEventClick}
+        eventPropGetter={eventStyleGetter}
+      />
+      <Dialog open={openDialog} onClose={handleClosePopup} style={{ position: 'absolute', zIndex: 100 }}>
         <DialogTitle>
           <div style={{ display: 'flex', justifyContent: 'flex-end', right: 0, marginTop: '-5px' }}>
             {editingIndex !== selectedEvent?.id && (
@@ -302,19 +332,19 @@ const AdminCalendar = () => {
                 label="Date"
                 type="date"
                 value={moment(selectedEvent.date[0]).format('YYYY-MM-DD')}
-                onChange={(e) => setSelectedEvent({ ...selectedEvent, date: moment(e.target.value).format('YYYY/MM/DD')})}
+                onChange={(e) => setSelectedEvent({ ...selectedEvent, date: moment(e.target.value).format('YYYY/MM/DD') })}
                 InputLabelProps={{
                   shrink: true,
                 }}
                 fullWidth
-                margin="normal" 
-                style={{ marginBottom: '30px' }} 
+                margin="normal"
+                style={{ marginBottom: '30px' }}
               />
               <TextField
                 label="Beginning Hour"
                 type="time"
                 value={editedOrder?.beginingHour ? editedOrder.beginingHour : selectedEvent?.beginingHour}
-                onChange={(e) => handleChange(e, 'beginingHour')} 
+                onChange={(e) => handleChange(e, 'beginingHour')}
                 style={inputStyle}
               />
 
@@ -332,7 +362,7 @@ const AdminCalendar = () => {
               <Typography variant="h6"><strong>User Name:</strong> {selectedEvent && getUserById(selectedEvent.userid)?.name}</Typography>
               <Typography variant="h6"><strong>User Phone: </strong> {selectedEvent && getUserById(selectedEvent.userid)?.phone}</Typography>
               <Typography variant="h6"><strong>User Email: </strong> {selectedEvent && getUserById(selectedEvent.userid)?.email}</Typography>
-              <Typography variant="h6"><strong>date: </strong> {moment(selectedEvent?.date).format('YYYY/MM/DD')}</Typography>
+              <Typography variant="h6"><strong>date: </strong> {selectedEvent?.date}</Typography>
               <Typography variant="h6"><strong>beginingHour: </strong> {selectedEvent?.beginingHour}</Typography>
               <Typography variant="h6"><strong>endHour:</strong>  {selectedEvent?.endHour}</Typography>
             </>
