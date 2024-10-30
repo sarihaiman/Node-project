@@ -72,6 +72,11 @@ export const updateUser = async (req: Request, res: Response) => {
             res.status(404).send('user not found');
             return
         }
+        const usertocheck = await user_Model.findOne({ email: data.email })
+        if (usertocheck) {
+            res.status(409).send("email exists")
+            return
+        }
         await user_Model.updateOne({
             id: id
         }, {

@@ -1,8 +1,10 @@
 import { useState, useEffect, ChangeEvent } from 'react';
 import { Button, TextField, Typography, IconButton, Dialog, DialogTitle, DialogContent } from '@mui/material';
-import {Close,Edit,Delete, Save, Add} from '@mui/icons-material';
+import { Close, Edit, Delete, Save, Add } from '@mui/icons-material';
 import { deleteUser, editUser, getAllUsers, SignUp } from '../../api/user.api';
 import { User } from '../../interface/user.interface';
+import { validateName, validatePrice, validatePhone, validatePassword, validateEmail } from '../../utils/validation'
+import Swal from 'sweetalert2';
 
 const CustomersAll = () => {
     const [AllCustomers, setAllCustomers] = useState<User[]>([]);
@@ -35,28 +37,59 @@ const CustomersAll = () => {
         if (editingIndex !== null) {
             // Get the original values from AllCustomers based on the editingIndex
             const originalValues = AllCustomers[editingIndex];
-    
+
             // Reset the input fields to the original values
             setName(originalValues.name);
             setEmail(originalValues.email);
             setPhone(originalValues.phone);
             setPassword(originalValues.password);
         }
-    
+
         setEditingIndex(null);
         setIsDialogOpen(false); // Close the dialog when canceling the edit
     };
-    
+
 
     const handleSave = async (editedPackage: User) => {
+        const nameValidationResult: string = validateName(editedPackage.name);
+        if (nameValidationResult) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: 'Please enter a valid Name value.',
+            });
+            return;
+        }
+        const emailValidationResult: string = validateEmail(editedPackage.email);
+        if (emailValidationResult) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: 'Please enter a valid Email value.',
+            });
+            return;
+        }
+        const phoneValidationResult: string = validatePhone(editedPackage.phone);
+        if (phoneValidationResult) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: 'Please enter a valid Phone value.',
+            });
+            return;
+        }
         try {
             await editUser(editedPackage);
             setAllCustomers(prevPackages =>
                 prevPackages.map((pkg, index) => (index === editingIndex ? editedPackage : pkg))
             );
             setEditingIndex(null);
-        } catch (error) {
-            console.error('Error updating business details:', error);
+        } catch (error:any) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: error.response.data,
+            });
         }
     };
 
@@ -89,6 +122,42 @@ const CustomersAll = () => {
                     password: password,
                     isAdmin: false
                 };
+                const nameValidationResult: string = validateName(name);
+                if (nameValidationResult) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error',
+                        text: 'Please enter a valid Name value.',
+                    });
+                    return;
+                }
+                const emailValidationResult: string = validateEmail(email);
+                if (emailValidationResult) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error',
+                        text: 'Please enter a valid Email value.',
+                    });
+                    return;
+                }
+                const passwordValidationResult: string = validatePassword(password);
+                if (passwordValidationResult) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error',
+                        text: 'Please enter a valid Password value.',
+                    });
+                    return;
+                }
+                const phoneValidationResult: string = validatePhone(phone);
+                if (phoneValidationResult) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error',
+                        text: 'Please enter a valid Phone value.',
+                    });
+                    return;
+                }
                 const response = await SignUp(u);
                 if (response === 'sign up 0 secceeded') {
                     setAllCustomers([...AllCustomers, u]);
@@ -100,16 +169,35 @@ const CustomersAll = () => {
                 } else {
                     console.error('Error adding new user: Response status is not 200');
                 }
-            } catch (error) {
-                console.error('Error adding new user:', error);
+            } catch (error: any) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: error.response.data,
+                });
+                console.error('Error logging in:', error);
             }
         }
-    };
+        else
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: 'Not completing values ​​in all fields.',
+            });
+    }
+
+    const setIsDialogOpenToAdd = async () => {
+        setName('');
+        setEmail('');
+        setPhone('')
+        setPassword('')
+        setIsDialogOpen(false)
+    }
 
     return (
         <div>
             <Button onClick={() => setIsDialogOpen(true)} startIcon={<Add />} style={{ marginBottom: '10px', marginTop: '10px', marginLeft: '40px' }}>Add New User</Button>
-            <Dialog open={isDialogOpen} onClose={() => setIsDialogOpen(false)}>
+            <Dialog open={isDialogOpen} onClose={setIsDialogOpenToAdd} style={{ position: 'absolute', zIndex: 1 }}>
                 <DialogTitle style={{ marginTop: '20px' }}>
                     Add New User
                     <IconButton style={{ position: 'absolute', right: 0, top: 0 }} onClick={() => setIsDialogOpen(false)}>
