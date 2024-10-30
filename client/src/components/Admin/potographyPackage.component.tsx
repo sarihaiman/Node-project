@@ -1,8 +1,10 @@
 import { useState, useEffect, ChangeEvent } from 'react';
 import { Button, TextField, Typography, IconButton, Dialog, DialogTitle, DialogContent } from '@mui/material';
-import {Close,Edit ,Delete,Save, Add}  from '@mui/icons-material';
+import { Close, Edit, Delete, Save, Add } from '@mui/icons-material';
 import { getAllPotograpyName, editPotographyPackage, deletePotographyPackage, addPotographyPackage } from '../../api/PotographyPackage.api';
 import { PotographyPackage } from '../../interface/PotographyPackage.interface';
+import { validateName, validatePrice } from '../../utils/validation'
+import Swal from 'sweetalert2';
 
 const PotographyPackageAll = () => {
     const [photographyPackages, setPhotographyPackages] = useState<PotographyPackage[]>([]);
@@ -23,7 +25,6 @@ const PotographyPackageAll = () => {
                 setIsLoading(false);
             }
         };
-
         fetchPhotographyPackages();
     }, []);
 
@@ -32,6 +33,24 @@ const PotographyPackageAll = () => {
     };
 
     const handleSave = async (editedPackage: PotographyPackage) => {
+        const errorName = validateName(editedPackage.type);
+        if (errorName) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: 'Please enter a valid Package Type.',
+            });
+            return;
+        }
+        const errorHours = validatePrice(editedPackage.moneyToHour);
+        if (errorHours) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: 'Please enter a valid Money To Hour value.',
+            });
+            return;
+        }
         try {
             await editPotographyPackage(editedPackage);
             setPhotographyPackages(prevPackages =>
@@ -41,6 +60,13 @@ const PotographyPackageAll = () => {
         } catch (error) {
             console.error('Error updating business details:', error);
         }
+    };
+
+    const handleChange = (e: ChangeEvent<HTMLInputElement>, index: number) => {
+        const { name, value } = e.target;
+        setPhotographyPackages(prevPackages =>
+            prevPackages.map((pkg, i) => (i === index ? { ...pkg, [name]: value } : pkg))
+        );
     };
 
     const handleDelete = async (index: number) => {
@@ -54,13 +80,6 @@ const PotographyPackageAll = () => {
         }
     };
 
-    const handleChange = (e: ChangeEvent<HTMLInputElement>, index: number) => {
-        const { name, value } = e.target;
-        setPhotographyPackages(prevPackages =>
-            prevPackages.map((pkg, i) => (i === index ? { ...pkg, [name]: value } : pkg))
-        );
-    };
-
     const handleAdd = async () => {
         if (newPackageType && newPackageMoneyToHour) {
             try {
@@ -69,6 +88,24 @@ const PotographyPackageAll = () => {
                     type: newPackageType,
                     moneyToHour: Number(newPackageMoneyToHour)
                 };
+                const errorName = validateName(p.type);
+                if (errorName) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error',
+                        text: 'Please enter a valid Package Type.',
+                    });
+                    return;
+                }
+                const errorHours = validatePrice(p.moneyToHour);
+                if (errorHours) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error',
+                        text: 'Please enter a valid Money To Hour value.',
+                    });
+                    return;
+                }
                 const response = await addPotographyPackage(p);
                 if (response.status === 200) {
                     const newPackage: PotographyPackage = response.data; // Extract data from the response
@@ -79,23 +116,34 @@ const PotographyPackageAll = () => {
                 } else {
                     console.error('Error adding new package: Response status is not 200');
                 }
-            } catch (error) {
-                console.error('Error adding new package:', error);
+            } catch (error: any) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: error.response.data,
+                });
+                console.error('Error logging in:', error);
             }
         }
+        else
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: 'Not completing values ​​in all fields.',
+            });
     };
 
     return (
         <div>
             <Button onClick={() => setIsDialogOpen(true)} startIcon={<Add />} style={{ marginBottom: '10px', marginTop: '10px', marginLeft: '40px' }}>Add New Package</Button>
-            <Dialog open={isDialogOpen} onClose={() => setIsDialogOpen(false)}>
-                <DialogTitle style={{marginTop: '20px'}}>
+            <Dialog open={isDialogOpen} onClose={() => setIsDialogOpen(false)} style={{ position: 'absolute', zIndex: 1 }}>
+                <DialogTitle style={{ marginTop: '20px' }}>
                     Add New Photography Package
                     <IconButton style={{ position: 'absolute', right: 0, top: 0 }} onClick={() => setIsDialogOpen(false)}>
                         <Close />
                     </IconButton>
                 </DialogTitle>
-                <DialogContent style={{ width: '400px', display: 'flex', flexDirection: 'column', alignItems: 'center' , marginTop:'-20px'}}>
+                <DialogContent style={{ width: '400px', display: 'flex', flexDirection: 'column', alignItems: 'center', marginTop: '-20px' }}>
                     <br />
                     <TextField
                         label="Type"
@@ -105,6 +153,7 @@ const PotographyPackageAll = () => {
                     />
                     <br />
                     <TextField
+                        type='number'
                         label="Money To Hour"
                         value={newPackageMoneyToHour}
                         onChange={(e) => setNewPackageMoneyToHour(e.target.value)}
@@ -139,6 +188,7 @@ const PotographyPackageAll = () => {
                                         />
                                         <br /> <br />
                                         <TextField
+                                            type='number'
                                             name="moneyToHour"
                                             label="Money To Hour"
                                             value={photographyPackage.moneyToHour.toString()}

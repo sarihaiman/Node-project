@@ -24,6 +24,14 @@ export const validatePhone = (phone: string) => {
     return '';
 };
 
+
+export const validatePrice = (price: number) => {
+    if (price<1) {
+        return 'Phone number should be in the format 1234567890';
+    }
+    return '';
+};
+
 export const validateAddress = (address: string) => {
     const addressRegex = /^[\u0590-\u05FFa-zA-Z0-9\s]{5,30}$/;
     if (!addressRegex.test(address)) {
