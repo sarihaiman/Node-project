@@ -3,7 +3,7 @@ import { Button, TextField, Typography, IconButton, Dialog, DialogTitle, DialogC
 import { Close, Edit, Delete, Save, Add } from '@mui/icons-material';
 import { deleteUser, editUser, getAllUsers, SignUp } from '../../api/user.api';
 import { User } from '../../interface/user.interface';
-import { validateName, validatePrice, validatePhone, validatePassword, validateEmail } from '../../utils/validation'
+import { validateName, validatePhone, validatePassword, validateEmail } from '../../utils/validation'
 import Swal from 'sweetalert2';
 
 const CustomersAll = () => {
@@ -14,6 +14,19 @@ const CustomersAll = () => {
     const [email, setEmail] = useState('');
     const [phone, setPhone] = useState('');
     const [password, setPassword] = useState('');
+    const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('asc');
+
+    const handleSort = () => {
+        const sortedCustomers = [...AllCustomers];
+        if (sortOrder === 'asc') {
+            sortedCustomers.sort((a, b) => a.name.localeCompare(b.name));
+            setSortOrder('desc');
+        } else {
+            sortedCustomers.sort((a, b) => b.name.localeCompare(a.name));
+            setSortOrder('asc');
+        }
+        setAllCustomers(sortedCustomers);
+    };
 
     useEffect(() => {
         const fetchAllCustomers = async () => {
@@ -84,7 +97,7 @@ const CustomersAll = () => {
                 prevPackages.map((pkg, index) => (index === editingIndex ? editedPackage : pkg))
             );
             setEditingIndex(null);
-        } catch (error:any) {
+        } catch (error: any) {
             Swal.fire({
                 icon: 'error',
                 title: 'Error',
@@ -197,6 +210,9 @@ const CustomersAll = () => {
     return (
         <div>
             <Button onClick={() => setIsDialogOpen(true)} startIcon={<Add />} style={{ marginBottom: '10px', marginTop: '10px', marginLeft: '40px' }}>Add New User</Button>
+            <Button onClick={handleSort} style={{ marginBottom: '10px', marginTop: '10px', marginLeft: '1100px' }}>
+                Sort by Name {sortOrder === 'asc' ? 'A-Z' : 'Z-A'}
+            </Button>
             <Dialog open={isDialogOpen} onClose={setIsDialogOpenToAdd} style={{ position: 'absolute', zIndex: 1 }}>
                 <DialogTitle style={{ marginTop: '20px' }}>
                     Add New User
