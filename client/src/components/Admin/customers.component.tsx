@@ -172,16 +172,12 @@ const CustomersAll = () => {
                     return;
                 }
                 const response = await SignUp(u);
-                if (response === 'sign up 0 secceeded') {
-                    setAllCustomers([...AllCustomers, u]);
-                    setName('');
-                    setEmail('');
-                    setPhone('')
-                    setPassword('')
-                    setIsDialogOpen(false);
-                } else {
-                    console.error('Error adding new user: Response status is not 200');
-                }
+                setAllCustomers([...AllCustomers, response]);
+                setName('');
+                setEmail('');
+                setPhone('')
+                setPassword('')
+                setIsDialogOpen(false);
             } catch (error: any) {
                 Swal.fire({
                     icon: 'error',

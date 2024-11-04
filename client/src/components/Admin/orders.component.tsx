@@ -50,10 +50,10 @@ const AdminCalendar = () => {
         setnameUser(packageNames2);
 
         const response = await getOrderPackage();
-        if (response.status !== 200) {
+        if (response!.status !== 200) {
           throw new Error('Failed to fetch events');
         }
-        const data: OrderPackage[] = response.data;
+        const data: OrderPackage[] = response!.data;
         setEvents(data);
       } catch (error) {
         console.error(error);
@@ -108,7 +108,7 @@ const AdminCalendar = () => {
     try {
       if (editedOrder) {
         const response = await editOrderPackage(editedOrder);
-        if (response.status === 200) {
+        if (response!.status === 200) {
           const updatedEvents = events.map((event) => (event.id === editedOrder.id ? editedOrder : event));
           setEvents(updatedEvents);
           setOpenDialog(false);
@@ -182,7 +182,7 @@ const AdminCalendar = () => {
       setBeginingHour('');
       setEndHour('');
       setIsDialogOpen(false);
-      setEvents([...events, order]);
+      setEvents([...events, response]);
     } catch (error: any) {
       Swal.fire({
         icon: 'error',
