@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
 import { getimage } from '../api/image.api';
+import { domain } from '../Config';
 
 const Home = () => {
     const [currentImageIndex, setCurrentImageIndex] = useState(0);
@@ -51,7 +51,7 @@ const Home = () => {
         <div style={{ position: 'relative', textAlign: 'center' }}>
             {images.map((image: any, index) => (
                 <div key={index} style={{ display: index === currentImageIndex ? 'block' : 'none', position: 'relative' }}>
-                    <img src={`http://localhost:3000/image/${image._id}`} alt={`Image ${index + 1}`} style={{ width: '100%' }} />
+                    <img src={`${domain}/image/${image._id}`} alt={`Image ${index + 1}`} style={{ width: '100%' }} />
                 </div>
             ))}
             <div style={{ position: 'absolute', bottom: '40px', width: '100%', display: 'flex', justifyContent: 'center' }}>{renderDots()}</div>

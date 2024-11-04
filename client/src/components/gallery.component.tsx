@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Grid, Typography } from '@mui/material';
 import { styled, useTheme } from '@mui/system';
-import axios from 'axios';
 import { getimage } from '../api/image.api';
+import { domain } from '../Config';
 
 const GalleryImage = styled('img')({
     width: '100%',
@@ -35,7 +35,7 @@ const GalleryComponent: React.FC = () => {
             <Grid container spacing={2}>
                 {images.map((image: any, index) => (
                     <Grid item xs={12} sm={6} md={4} key={index}>
-                        <GalleryImage src={`http://localhost:3000/image/${image._id}`} />
+                        <GalleryImage src={`${domain}/image/${image._id}`} />
                     </Grid>
                 ))}
             </Grid>

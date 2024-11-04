@@ -4,7 +4,6 @@ import { Select, MenuItem } from '@mui/material';
 import { OrderPackage } from '../interface/order.interface';
 import { addOrderPackage } from '../api/order.api';
 import { getAllPotograpyName } from '../api/PotographyPackage.api';
-import isTokenValid from '../utils/checkToken';
 import { useSelector } from 'react-redux';
 import { isTimeValid, isDateValid, isFormValid } from '../utils/validation'
 import Swal from 'sweetalert2';
@@ -38,7 +37,6 @@ const AddOrderFormComponent = () => {
     }, []);
 
     const handleAddOrder = async () => {
-        if (!isTokenValid()) { return; }
         if (!isFormValid(packageName, new Date(date), beginingHour, endHour) || !isTimeValid(beginingHour, endHour) || !isDateValid(new Date(date))) {
             return;
         }

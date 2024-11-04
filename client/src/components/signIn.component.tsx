@@ -13,6 +13,7 @@ import VisibilityIcon from '@material-ui/icons/Visibility';
 import VisibilityOffIcon from '@material-ui/icons/VisibilityOff';
 import { FormHelperText } from '@material-ui/core';
 import { validatePassword, validateEmail } from '../utils/validation';
+import { domain } from '../Config';
 
 export default function SigninForm() {
     const [email, setEmail] = useState('');
@@ -157,7 +158,7 @@ export default function SigninForm() {
                 code = String(Math.floor(100000 + Math.random() * 900000)); // Generate a random code
                 setResetCode(code);
                 setShowModal(true);
-                await axios.get(`http://localhost:3000/send-email`, {
+                await axios.get(`${domain}/send-email`, {
                     headers: {
                         'Content-Type': 'application/json',
                         "reset": code,
@@ -222,7 +223,7 @@ export default function SigninForm() {
                     />
                     <Button variant="contained" onClick={handleSigninForm}>Signin</Button>
                     <div className="disabled">
-                        <Typography variant="h6" className="forgot-password" onClick={resetPassword} style={{ cursor: 'pointer', marginTop: '25px' }}>Forgot Password?</Typography>
+                        {/* <Typography variant="h6" className="forgot-password" onClick={resetPassword} style={{ cursor: 'pointer', marginTop: '25px' }}>Forgot Password?</Typography> */}
                         <Dialog open={showModal} onClose={closeModal}>
                             <DialogTitle variant="h4">Reset Password Modal</DialogTitle>
                             <DialogContent>

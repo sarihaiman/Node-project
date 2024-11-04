@@ -5,8 +5,9 @@ import { IconButton, Typography, Button } from '@mui/material';
 import { useDropzone } from 'react-dropzone';
 import { FaTimes, FaUpload } from 'react-icons/fa';
 import { images } from '../../interface/image.interface';
-import { addimage,getimage , deleteimage,getByIdimage } from '../../api/image.api';
+import { getimage , deleteimage } from '../../api/image.api';
 import axios from 'axios';
+import { domain } from '../../Config';
 
 const GalleryImage = styled('img')({
   width: '100%',
@@ -56,8 +57,7 @@ const GalleryComponent: React.FC = () => {
     formData.append('file', file);
 
     try {
-      // await addimage(formData);
-      await axios.post('http://localhost:3000/image', formData, {
+      await axios.post(`${domain}/image`, formData, {
         headers: {
           'Content-Type': 'multipart/form-data'
         },
@@ -99,7 +99,7 @@ const GalleryComponent: React.FC = () => {
                 <Delete />
               </IconButton>
             </div>
-            <GalleryImage src={`http://localhost:3000/image/${image._id}`} />
+            <GalleryImage src={`${domain}/image/${image._id}`} />
           </div>
         ))}
       </div>

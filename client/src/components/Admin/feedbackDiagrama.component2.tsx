@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { getfeedback } from '../../api/feedback.api';
 import { BarChart } from '@mui/x-charts/BarChart';
-import { Dialog, IconButton, DialogTitle, Typography } from '@mui/material';
+import { Dialog, IconButton, Typography } from '@mui/material';
 import { Fullscreen } from '@mui/icons-material';
 
 const FeedbackChart = () => {

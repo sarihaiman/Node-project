@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { PieChart } from '@mui/x-charts/PieChart';
 import { getfeedback } from '../../api/feedback.api';
-import { Dialog, IconButton, DialogTitle, Typography, Button } from '@mui/material';
+import { Dialog, IconButton, Typography } from '@mui/material';
 import { Fullscreen } from '@mui/icons-material';
 
 const FeedbackChart = () => {
@@ -18,7 +18,7 @@ const FeedbackChart = () => {
         const fetchData = async () => {
             try {
                 const response = await getfeedback();
-                const responseData = response.data;
+                const responseData = response!.data;
                 const updatedData = [...data]; // Create a copy of the data array
 
                 responseData.forEach((element: { name: any; }) => {

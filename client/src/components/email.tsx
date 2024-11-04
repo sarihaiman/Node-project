@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import axios from 'axios';
+import { domain } from '../Config';
 
 const EmailForm = () => {
     const [emailData, setEmailData] = useState({
@@ -10,7 +11,7 @@ const EmailForm = () => {
     });
 
     const sendEmail = () => {
-        axios.post('http://localhost:3000/send-email', emailData)
+        axios.post(`${domain}/send-email`, emailData)
             .then(() => {
                 console.log('Email sent successfully');
             })

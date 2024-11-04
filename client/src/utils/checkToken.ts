@@ -6,11 +6,11 @@ const isTokenValid = () => {
       const decodedToken = jwtDecode(token);
       const currentTime = Date.now() / 1000; // Convert milliseconds to seconds
       if (decodedToken.exp! > currentTime) {
-        return true;
+        return token;
       }
     }
     window.location.href = 'http://localhost:5173/signIn'; 
-    return false;
+    return "";
   }
 
 export default isTokenValid;
