@@ -38,7 +38,7 @@ export const addOrderPackage = async function (req: Request, res: Response) {
             newOrderPackage.id = lengthNow
         }
         await OrderPackage_Model.insertMany(newOrderPackage);
-        res.send("Post " + OrderPackage.id + " secceeded")
+        res.send(newOrderPackage)
     } catch (err) {
         res.status(409).send("" + err);
     }

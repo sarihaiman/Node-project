@@ -31,6 +31,8 @@ export const signin = async (req: Request, res: Response) => {
                 res.status(409).send("email not found");
             }
             else{
+                console.log(password);
+                
                 res.status(409).send("incorrect password");
             }
         }
@@ -56,13 +58,20 @@ export const signup = async (req: Request, res: Response) => {
             email: data.email,
             isAdmin: data.isAdmin,
         }
+        const countUsers = await user_Model.find();
+        const length = countUsers.length
+        if (length === 0)
+            user.id = 0;
+        else {
+            const lengthNow = Number(countUsers[length - 1].id) + 1
+            user.id = lengthNow
+        }
         user_Model.insertMany(user)
-        res.send("sign up " + user.id + " secceeded")
+        res.send(user)
     } catch (err) {
         res.status(409).send(err);
     }
 }
-
 
 export const updateUser = async (req: Request, res: Response) => {
     try {
@@ -73,7 +82,7 @@ export const updateUser = async (req: Request, res: Response) => {
             return
         }
         const usertocheck = await user_Model.findOne({ email: data.email })
-        if (usertocheck) {
+        if (usertocheck && usertocheck.id!=id) {
             res.status(409).send("email exists")
             return
         }
