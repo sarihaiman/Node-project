@@ -14,6 +14,7 @@ const AddOrderFormComponent = () => {
     const [beginingHour, setBeginingHour] = useState('');
     const [endHour, setEndHour] = useState('');
     const [packages, setPackages] = useState([]);
+    const [note, setNote] = useState('');
 
     const userid: number = useSelector((state: any) => {
         return state.userReducer.currentUser.id;
@@ -51,7 +52,8 @@ const AddOrderFormComponent = () => {
                 packageId: selectedPackage['id'],
                 date: date.replace(/-/g, '/'),
                 beginingHour,
-                endHour
+                endHour,
+                note
             };
             console.log(order);
             const response = await addOrderPackage(order);
@@ -65,6 +67,7 @@ const AddOrderFormComponent = () => {
             setDate('');
             setBeginingHour('');
             setEndHour('');
+            setNote('');
         } catch (error: any) {
             Swal.fire({
                 icon: 'error',
@@ -130,6 +133,12 @@ const AddOrderFormComponent = () => {
                 type="time"
                 value={endHour}
                 onChange={(e) => setEndHour(e.target.value)}
+                style={inputStyle}
+            />
+            <TextField
+                label="Note"
+                value={note}
+                onChange={(e) => setNote(e.target.value)}
                 style={inputStyle}
             />
             <Button variant="contained" onClick={handleAddOrder}>Add Order</Button>

@@ -31,6 +31,7 @@ const AdminCalendar = () => {
   const [beginingHour, setBeginingHour] = useState('');
   const [endHour, setEndHour] = useState('');
   const [packages, setPackages] = useState<PotographyPackage[]>([]);
+  const [note, setNote] = useState('');
 
   useEffect(() => {
     const fetchEvents = async () => {
@@ -93,6 +94,7 @@ const AdminCalendar = () => {
     setDate('');
     setBeginingHour('');
     setEndHour('');
+    setNote('');
     setIsDialogOpen(false)
   };
 
@@ -165,7 +167,8 @@ const AdminCalendar = () => {
         packageId: Number(selectedPackage['id']),
         date: date.replace(/-/g, '/'),
         beginingHour,
-        endHour
+        endHour,
+        note
       };
       console.log(order);
       const response = await addOrderPackage(order);
@@ -181,6 +184,7 @@ const AdminCalendar = () => {
       setDate('');
       setBeginingHour('');
       setEndHour('');
+      setNote('');
       setIsDialogOpen(false);
       setEvents([...events, response]);
     } catch (error: any) {
@@ -280,6 +284,12 @@ const AdminCalendar = () => {
             onChange={(e) => setEndHour(e.target.value)}
             style={inputStyle}
           />
+          <TextField
+            label="Note"
+            value={note}
+            onChange={(e) => setNote(e.target.value)}
+            style={inputStyle}
+          />
           <Button onClick={handleAddOrder} variant="contained" color="primary" style={{ marginTop: '20px' }}>Add</Button>
         </DialogContent>
       </Dialog>
@@ -355,6 +365,12 @@ const AdminCalendar = () => {
                 onChange={(e) => handleChange(e, 'endHour')}
                 style={inputStyle}
               />
+              <TextField
+                label="Note"
+                value={editedOrder?.note ? editedOrder.note : selectedEvent?.note}
+                onChange={(e) => handleChange(e, 'note')}
+                style={inputStyle}
+              />
             </>
           ) : (
             <>
@@ -365,6 +381,11 @@ const AdminCalendar = () => {
               <Typography variant="h6"><strong>date: </strong> {selectedEvent?.date}</Typography>
               <Typography variant="h6"><strong>beginingHour: </strong> {selectedEvent?.beginingHour}</Typography>
               <Typography variant="h6"><strong>endHour:</strong>  {selectedEvent?.endHour}</Typography>
+              {selectedEvent?.note && selectedEvent.note.trim() !== '' && (
+                <Typography variant="h6">
+                  <strong>note:</strong> {selectedEvent.note}
+                </Typography>
+              )}
             </>
           )}
         </DialogContent>
