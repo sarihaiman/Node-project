@@ -2,63 +2,45 @@ import { Response, Request } from 'express';
 import fs from 'fs';
 import path from 'path';
 import multer from 'multer';
+import File from '../Models/Files.model';
 
-interface MulterFile {
-    fieldname: string;
-    originalname: string;
-    encoding: string;
-    mimetype: string;
-    size: number;
-    destination: string;
-    filename: string;
-    path: string;
-}
-
-export const uploadFile = async (req: Request, res: Response) => {
-    const tempFile = req.file as MulterFile | undefined;
-
-    if (!tempFile) {
-        res.status(400).send('File data is missing');
-        return;
+export const uploadFile = async (req: any, res: Response) => {
+    try {
+        const newFile = new File({
+            filename: req.file.originalname,
+            contentType: req.file.mimetype,
+            data: req.file.buffer,
+        });
+        await newFile.save();
+        res.status(201).send('File uploaded successfully');
+    } catch (error) {
+        res.status(500).send('Error uploading file');
     }
-
-    const tempPath = tempFile.path;
-    const originalName = tempFile.originalname;
-
-    const targetPath = path.join(__dirname, `../uploads/${originalName}`);
-
-    fs.rename(tempPath, targetPath, (err) => {
-        if (err) {
-            console.error('Error moving file:', err);
-            res.status(500).send('Error uploading file');
-        } else {
-            res.status(200).send('File uploaded successfully');
-        }
-    });
 };
 
 export const getUploadFile = async (req: Request, res: Response) => {
-    const uploadDir = path.join(__dirname, '../uploads');
-    fs.readdir(uploadDir, (err, files) => {
-        if (err) {
-            console.error('Error reading upload directory:', err);
-            res.status(500).send('Error reading upload directory');
-        } else {
-            res.status(200).json({ files });
+    try {
+        const files = await File.find().exec();
+        if (!files || files.length === 0) {
+            return res.status(404).send('No files found');
         }
-    });
-
+        res.json(files);
+    } catch (error) {
+        res.status(500).send('Error fetching files');
+    }
 }
 
 export const getUploadFileOne = async (req: Request, res: Response) => {
-    const fileName = req.params.fileName;
-    const filePath = path.join(__dirname, `../uploads/${fileName}`);
-
-    res.download(filePath, (err) => {
-        if (err) {
-            console.error('Error downloading file:', err);
-            res.status(500).send('Error downloading file');
+    try {
+        const file = await File.findOne({ filename: req.params.fileName });
+        if (!file) {
+            return res.status(404).send('File not found');
         }
-    });
+        res.set('Content-Type', file.contentType);
+        res.set('Content-Disposition', `attachment; filename="${file.filename}"`);
+        res.send(file.data);
+    } catch (error) {
+        console.error('Error fetching file:', error);
+        res.status(500).send('Error fetching file');
+    }
 };
-
