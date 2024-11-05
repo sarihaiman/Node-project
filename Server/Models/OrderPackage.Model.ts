@@ -12,6 +12,7 @@ const OrderPackageModel_schema = new Schema({
     date: { type: datePattern },
     beginingHour: { type: hourPattern },
     endHour: { type: hourPattern },
+    note: { type: String },
 });
 
 export default mongoose.model("OrderPackage_Model", OrderPackageModel_schema);

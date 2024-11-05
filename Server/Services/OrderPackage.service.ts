@@ -22,6 +22,7 @@ export const addOrderPackage = async function (req: Request, res: Response) {
             "beginingHour": Array(OrderPackage.beginingHour),
             "endHour": Array(OrderPackage.endHour),
             "packageId": Number(OrderPackage.packageId),
+            "note": OrderPackage.note || "",
         }
         await isCorrect(newOrderPackage)
         try {
@@ -54,7 +55,8 @@ export const updateOrderPackage = async function (req: Request, res: Response) {
             "date": Array(data.date),
             "beginingHour": Array(data.beginingHour),
             "endHour": Array(data.endHour),
-            "packageId": Number(data.packageId)
+            "packageId": Number(data.packageId),
+            "note": data.note || "",
         }
         await isCorrect(newOrderPackage)
         try {
@@ -71,7 +73,8 @@ export const updateOrderPackage = async function (req: Request, res: Response) {
                 date: data.date,
                 beginingHour: data.beginingHour,
                 endHour: data.endHour,
-                packageId: data.packageId
+                packageId: data.packageId,
+                note: data.note || ""
             }
         })
         res.send("Update " + id + " secceeded")
