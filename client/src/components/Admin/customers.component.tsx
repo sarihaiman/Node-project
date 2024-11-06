@@ -1,5 +1,5 @@
 import { useState, useEffect, ChangeEvent } from 'react';
-import { Button, TextField, Typography, IconButton, Dialog, DialogTitle, DialogContent } from '@mui/material';
+import { Button, TextField, Typography, IconButton, Dialog, DialogTitle, DialogContent, FormControlLabel, Checkbox } from '@mui/material';
 import { Close, Edit, Delete, Save, Add } from '@mui/icons-material';
 import { deleteUser, editUser, getAllUsers, SignUp } from '../../api/user.api';
 import { User } from '../../interface/user.interface';
@@ -14,6 +14,7 @@ const CustomersAll = () => {
     const [email, setEmail] = useState('');
     const [phone, setPhone] = useState('');
     const [password, setPassword] = useState('');
+    const [admin, setAdmin] = useState(false);
     const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('asc');
 
     const handleSort = () => {
@@ -133,7 +134,7 @@ const CustomersAll = () => {
                     email: email,
                     phone: phone,
                     password: password,
-                    isAdmin: false
+                    isAdmin: admin
                 };
                 const nameValidationResult: string = validateName(name);
                 if (nameValidationResult) {
@@ -177,6 +178,7 @@ const CustomersAll = () => {
                 setEmail('');
                 setPhone('')
                 setPassword('')
+                setAdmin(false);
                 setIsDialogOpen(false);
             } catch (error: any) {
                 Swal.fire({
@@ -200,6 +202,7 @@ const CustomersAll = () => {
         setEmail('');
         setPhone('')
         setPassword('')
+        setAdmin(false);
         setIsDialogOpen(false)
     }
 
@@ -245,6 +248,19 @@ const CustomersAll = () => {
                         onChange={(e) => setPhone(e.target.value)}
                         fullWidth
                     />
+                    <br />
+                    <FormControlLabel
+                        control={
+                            <Checkbox
+                                checked={admin}
+                                onChange={(e) => setAdmin(e.target.checked)}
+                                color="primary"
+                            />
+                        }
+                        label="Admin"
+                        style={{ marginRight: '250px' }}
+                    />
+
                     <Button onClick={handleAdd} variant="contained" color="primary" style={{ marginTop: '20px' }}>Add</Button>
                 </DialogContent>
             </Dialog>

@@ -223,7 +223,7 @@ export default function SigninForm() {
                     />
                     <Button variant="contained" onClick={handleSigninForm}>Signin</Button>
                     <div className="disabled">
-                        {/* <Typography variant="h6" className="forgot-password" onClick={resetPassword} style={{ cursor: 'pointer', marginTop: '25px' }}>Forgot Password?</Typography> */}
+                        <Typography variant="h6" className="forgot-password" onClick={resetPassword} style={{ cursor: 'pointer', marginTop: '25px' }}>Forgot Password?</Typography>
                         <Dialog open={showModal} onClose={closeModal}>
                             <DialogTitle variant="h4">Reset Password Modal</DialogTitle>
                             <DialogContent>

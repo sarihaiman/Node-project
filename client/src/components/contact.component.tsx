@@ -1,10 +1,13 @@
 import { useState } from 'react';
-import { Grid, TextField, Button, Box } from '@material-ui/core';
+import { Grid, Box } from '@material-ui/core';
 import { WhatsApp, Phone, Email, Message, Chat } from '@material-ui/icons'; // Import the Chat icon
+import { TextField, Button, Dialog, DialogTitle, DialogContent, DialogActions } from '@mui/material';
+import ChatComponent from '../components/ChatBot/chatbot.components';
 
 const Contact = () => {
-    const [showMessageForm, setShowMessageForm] = useState(false);
-    // const [showChat, setShowChat] = useState(false);
+    const [openDialog, setOpenDialog] = useState(false);
+
+    const [showChat, setShowChat] = useState(false);
     const [formData, setFormData] = useState({
         name: '',
         email: '',
@@ -25,20 +28,20 @@ const Contact = () => {
     };
 
     const handleDirectMessageClick = () => {
-        setShowMessageForm(true);
+        // setShowMessageForm(true);
+        setOpenDialog(true);
     };
 
     const handleChatClick = () => {
-        // setShowChat(true);
-
+        setShowChat(true)
     };
 
     // const handleChatClick = () => {
     //     window.location.href = 'http://localhost:5173/chat';
     // };
 
-    const handleFormSubmit = (e: { preventDefault: () => void; }) => {
-        e.preventDefault();
+    const handleCloseDialogError = () => {
+        setOpenDialog(false);
     };
 
     const handleInputChange = (e: { target: { name: any; value: any; }; }) => {
@@ -61,8 +64,14 @@ const Contact = () => {
         });
     };
 
+    const inputStyle: React.CSSProperties = {
+        height: '55px',
+        width: '100%',
+        marginBottom: '30px',
+    };
+
     return (
-        <Grid container direction="column" alignItems="center">
+        <div>
             <Box display="flex" justifyContent="center" style={{ padding: '20px', margin: '20px' }}>
                 <Grid container spacing={10} justifyContent="center"> {/* Update 'justify' to 'justifyContent' */}
                     <Grid item><WhatsApp onClick={handleWhatsAppClick} style={{ cursor: 'pointer', fontSize: 50 }} /></Grid>
@@ -72,20 +81,48 @@ const Contact = () => {
                     <Grid item><Chat onClick={handleChatClick} style={{ cursor: 'pointer', fontSize: 50 }} /></Grid> {/* Add the Chat icon */}
                 </Grid>
             </Box>
-            {showMessageForm && (
-                <Box style={{ border: '2px solid rgb(111, 233, 224)', borderRadius: '10px', padding: '20px', margin: '20px' }}>
-                    <form onSubmit={handleFormSubmit}>
-                        <Grid container direction="column" spacing={2} alignItems="center">
-                            <Grid item><TextField name="name" label="Name" value={formData.name} onChange={handleInputChange} fullWidth /></Grid>
-                            <Grid item><TextField name="email" label="Email" value={formData.email} onChange={handleInputChange} fullWidth /></Grid>
-                            <Grid item><TextField name="phone" label="Phone" value={formData.phone} onChange={handleInputChange} fullWidth /></Grid>
-                            <Grid item><TextField name="message" label="Message" multiline rows={4} value={formData.message} onChange={handleInputChange} fullWidth /></Grid>
-                            <Grid item><Button style={{ backgroundColor: 'rgb(111, 233, 224)', color: 'black' }} type="submit" variant="contained" color="primary">Send</Button></Grid>
-                        </Grid>
-                    </form>
-                </Box>
-            )}
-        </Grid>
+            <Dialog open={openDialog} onClose={handleCloseDialogError}>
+                <DialogTitle>Massage</DialogTitle>
+                <DialogContent>
+                    <br />
+                    <TextField
+                        name="name"
+                        label="Name"
+                        value={formData.name}
+                        onChange={handleInputChange}
+                        style={inputStyle}
+                        fullWidth />
+                    <TextField
+                        name="email"
+                        label="Email"
+                        value={formData.email}
+                        onChange={handleInputChange}
+                        style={inputStyle}
+                        fullWidth />
+                    <TextField
+                        name="phone"
+                        label="Phone"
+                        value={formData.phone}
+                        onChange={handleInputChange}
+                        style={inputStyle}
+                        fullWidth />
+                    <TextField
+                        name="message"
+                        label="Message"
+                        multiline rows={4}
+                        value={formData.message}
+                        onChange={handleInputChange}
+                        style={inputStyle}
+                        fullWidth />
+                </DialogContent>
+                <DialogActions>
+                    <Button onClick={handleCloseDialogError} color="primary">
+                        Send
+                    </Button>
+                </DialogActions>
+            </Dialog>
+            {showChat && <ChatComponent />}
+        </div>
     );
 };
 

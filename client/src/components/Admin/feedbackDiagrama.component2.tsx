@@ -12,7 +12,7 @@ const FeedbackChart = () => {
         const fetchData = async () => {
             try {
                 const response = await getfeedback();
-                const responseData = response.data;
+                const responseData = response!.data;
                 const updatedData = [...data];
 
                 responseData.forEach((element: { name: any; }) => {

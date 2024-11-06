@@ -46,7 +46,7 @@ export default function CustomizedDialogs() {
                 name: feedback,
             };
             const response = await addfeedback(f)
-            if (response.status === 200) {
+            if (response!.status === 200) {
                 handleClose();
             } else {
                 console.error('Failed to send feedback');
