@@ -43,7 +43,7 @@ const AdminCalendar = () => {
         setUsers(responseUsers);
 
         const dataPackageName = responsePackageName;
-        const packageNames = dataPackageName.map((item: any) => ({ id: item.id, type: item.type }));
+        const packageNames = dataPackageName.map((item: any) => ({ id: item.id, type: item.type, moneyToHour: item.moneyToHour }));
         setPackages(packageNames);
 
         const datauserName = responseUsers;
@@ -147,11 +147,37 @@ const AdminCalendar = () => {
     setEditedOrder(null);
   };
 
+  const calculateTotalCost = () => {
+    const selectedPackage: any = packages.find((pkg: any) => pkg.type === packageName);
+    if (!selectedPackage) {
+      return 0;
+    }
+    const hourlyRate: number = selectedPackage.moneyToHour;
+    const hours: number = (new Date(`1970-01-01T${endHour}:00`).getTime() - new Date(`1970-01-01T${beginingHour}:00`).getTime()) / 3600000;
+    return hourlyRate * hours;
+  };
+
   const handleAddOrder = async () => {
     if (!isTokenValid()) { return; }
     if (!isFormValid(packageName, new Date(date), beginingHour, endHour) || !isTimeValid(beginingHour, endHour) || !isDateValid(new Date(date))) {
       return;
     }
+    const cost = calculateTotalCost();
+    Swal.fire({
+      icon: 'info',
+      title: 'Total Cost',
+      text: `Total Cost: ${cost}$`,
+      showCancelButton: true,
+      confirmButtonText: 'Continue',
+      cancelButtonText: 'Cancel',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        handleContinue();
+      }
+    });
+  };
+
+  const handleContinue = async () => {
     try {
       const selectedPackage = packages.find((pkg: any) => pkg.type === packageName);
       const selectedUser = nameUser.find((pkg: any) => pkg.name === userName);
@@ -194,8 +220,7 @@ const AdminCalendar = () => {
         text: error.response.data,
       });
     }
-  };
-
+  }
   const handleDelete = () => {
     deleteOrderPackage(selectedEvent!.id)
     const updatedEvents = events.filter((event) => event.id !== selectedEvent?.id);
@@ -258,7 +283,10 @@ const AdminCalendar = () => {
             >
               {packages.map((option: any) => (
                 <MenuItem key={option.id} value={option.type}>
-                  {option.type}
+                  <div style={{ display: 'flex', justifyContent: 'space-between', width: '100%' }}>
+                    <span style={{ marginRight: 'auto' }}>{`${option.type}`}</span>
+                    <span style={{ marginLeft: 'auto' }}>{`${option.moneyToHour}$ per hour`}</span>
+                  </div>
                 </MenuItem>
               ))}
             </Select>

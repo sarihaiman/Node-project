@@ -107,8 +107,8 @@ const PotographyPackageAll = () => {
                     return;
                 }
                 const response = await addPotographyPackage(p);
-                if (response.status === 200) {
-                    const newPackage: PotographyPackage = response.data; // Extract data from the response
+                if (response!.status === 200) {
+                    const newPackage: PotographyPackage = response!.data; // Extract data from the response
                     setPhotographyPackages([...photographyPackages, newPackage]);
                     setNewPackageType('');
                     setNewPackageMoneyToHour('');
