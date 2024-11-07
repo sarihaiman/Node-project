@@ -1,14 +1,18 @@
 import { Response, Request } from 'express';
 import PhotographyPackage_Model from '../Models/PhotographyPackage.Model';
 
-export const getallPhotographyPackage = async (req: Request, res: Response) =>{
+export const getallPhotographyPackage = async (req: Request, res: Response) => {
     const PhotographyPackage = await PhotographyPackage_Model.find();
     res.send(PhotographyPackage)
 }
 
-export const addPhotographyPackage = async (req: Request, res: Response) =>{
+export const addPhotographyPackage = async (req: Request, res: Response) => {
     try {
         const PhotographyPackage = JSON.parse(JSON.stringify(req.body));
+        if (PhotographyPackage.moneyToHour <= 0) {
+            res.status(404).send('Please enter a valid Money To Hour value.');
+            return
+        }
         const countPhotographyPackage = await PhotographyPackage_Model.find();
         const newPhotographyPackage = {
             "id": Number(PhotographyPackage.id),
@@ -29,12 +33,16 @@ export const addPhotographyPackage = async (req: Request, res: Response) =>{
     }
 }
 
-export const updatePhotographyPackage = async (req: Request, res: Response) =>{
+export const updatePhotographyPackage = async (req: Request, res: Response) => {
     try {
         const id = req.params.Id;
         const data = req.body;
         if (await PhotographyPackage_Model.findOne({ "id": id }) === null) {
             res.status(404).send('PhotographyPackage not found');
+            return
+        }
+        if (data.moneyToHour <= 0) {
+            res.status(404).send('Please enter a valid Money To Hour value.');
             return
         }
         await PhotographyPackage_Model.updateOne({

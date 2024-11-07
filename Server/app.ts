@@ -57,3 +57,5 @@ const options: swaggerJsdoc.Options = {
 app.listen(PORT, () => {
   console.log(`Server is running on port : http://localhost:${PORT}`)
 }).on('error', function (err) { console.log("Error occurred, server can't start", err); })
+
+export default app;

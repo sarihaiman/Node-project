@@ -1,5 +1,5 @@
 import { Response, Request } from 'express';
-import feedback_Model from '../Models/feedback.Model';
+import feedback_Model from '../Models/Feedback.Model';
 import date from 'date-and-time';
 
 const datePattern = date.compile('YYYY/MM/DD')
